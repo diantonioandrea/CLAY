@@ -14,8 +14,8 @@
 #include "./Includes.h"
 
 // Types.
-typedef unsigned long long int Natural;
-typedef long long int Integer;
+typedef size_t Natural;
+typedef ptrdiff_t Integer;
 typedef long double Real;
 
 #endif

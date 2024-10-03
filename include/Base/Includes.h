@@ -12,6 +12,7 @@
 #define CLAY_BASE_INCLUDES
 
 #include <stdlib.h>
+#include <stddef.h>
 #include <stdio.h>
 #include <assert.h>
 
