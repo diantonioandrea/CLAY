@@ -23,8 +23,8 @@ all: $(DIRECTORIES) $(TESTS)
 
 # Tests.
 $(TESTS): executables/Test_%.out: objects/Test_%.o $(OBJECTS) 
-	@if [ "$(LDFLAGS) $(LDLIBS)" = " " ]; then echo "Linking to $@"; else echo "Linking to $@ with: $(LDFLAGS) $(LDLIBS)"; fi
-	@$(CC) $(LDFLAGS) $(LDLIBS) $^ -o $@
+	@echo "Linking to $@"
+	@$(CC) $^ -o $@
 
 # Objects.
 $(T_OBJECTS): objects/%.o: src/%.c $(HEADERS)
