@@ -24,6 +24,9 @@ void subMatrixMatrix(Matrix *, const Matrix *);
 void swapRows(Matrix *, const Natural, const Natural);
 void swapColumns(Matrix *, const Natural, const Natural);
 
+void swapRowsUntil(Matrix *, const Natural, const Natural, const Natural);
+void swapColumnsUntil(Matrix *, const Natural, const Natural, const Natural);
+
 [[nodiscard]] Matrix *addReturnMatrixScalar(const Matrix *, const Real);
 [[nodiscard]] Matrix *subReturnMatrixScalar(const Matrix *, const Real);
 [[nodiscard]] Matrix *mulReturnMatrixScalar(const Matrix *, const Real);

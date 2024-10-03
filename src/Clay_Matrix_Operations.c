@@ -140,6 +140,52 @@ void swapColumns(Matrix *matrix, const Natural m0, const Natural m1) {
 }
 
 /**
+ * @brief Partial row swap.
+ * 
+ * @param matrix Matrix.
+ * @param n0 Row index.
+ * @param n1 Row index.
+ * @param m Column index.
+ */
+void swapRowsUntil(Matrix *matrix, const Natural n0, const Natural n1, const Natural m) {
+    #ifndef NDEBUG // Integrity check.
+    assert(n0 < matrix->N);
+    assert(n1 < matrix->N);
+    assert(m <= matrix->M);
+    #endif
+
+    if((n0 != n1) && (m > 0))
+        for(Natural k = 0; k < m; ++k) {
+            Real temp = matrix->elements[n0 * matrix->M + k];
+            matrix->elements[n0 * matrix->M + k] = matrix->elements[n1 * matrix->M + k];
+            matrix->elements[n1 * matrix->M + k] = temp;
+        }
+}
+
+/**
+ * @brief Partial column swap.
+ * 
+ * @param matrix Matrix.
+ * @param m0 Column index.
+ * @param m1 Column index.
+ * @param n Row index.
+ */
+void swapColumnsUntil(Matrix *matrix, const Natural m0, const Natural m1, const Natural n) {
+    #ifndef NDEBUG // Integrity check.
+    assert(m0 < matrix->M);
+    assert(m1 < matrix->M);
+    assert(n < matrix->N);
+    #endif
+
+    if((m0 != m1) && (n > 0))
+        for(Natural j = 0; j < n; ++j) {
+            Real temp = matrix->elements[j * matrix->M + m0];
+            matrix->elements[j * matrix->M + m0] = matrix->elements[j * matrix->M + m1];
+            matrix->elements[j * matrix->M + m1] = temp;
+        }
+}
+
+/**
  * @brief Matrix + real.
  * 
  * @param matrix0 Matrix.
