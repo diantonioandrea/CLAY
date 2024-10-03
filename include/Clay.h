@@ -18,5 +18,7 @@
 #include "./Vector/Vector.h"
 #include "./Vector/Operations.h"
 
+// Matrices.
+#include "./Matrix/Matrix.h"
 
 #endif
