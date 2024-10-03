@@ -6,6 +6,7 @@ HEADERS = ./include/*.h
 
 HEADERS = ./include/Base/*.h
 HEADERS = ./include/Vector/*.h
+HEADERS = ./include/Matrix/*.h
 
 # Executables.
 TESTS = $(subst src/,executables/,$(subst .c,.out,$(shell find src -name "Test_*.c")))
