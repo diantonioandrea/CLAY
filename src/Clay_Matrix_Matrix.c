@@ -32,6 +32,19 @@
     return matrix;
 }
 
+[[nodiscard]] Matrix *newMatrixMatrix(const Matrix *matrix0) {
+    Matrix *matrix1 = (Matrix *) malloc(sizeof(Matrix));
+
+    matrix1->N = matrix0->N;
+    matrix1->M = matrix0->M;
+    matrix1->elements = (Real *) malloc(matrix0->N * matrix0->M * sizeof(Real));
+
+    for(Natural j = 0; j < matrix0->N * matrix0->M; ++j)
+        matrix1->elements[j] = matrix0->elements[j];
+
+    return matrix1;
+}
+
 /**
  * @brief Square matrix constructor.
  * 
