@@ -1,3 +1,3 @@
 # CLAY
 
-_A `C99` Linear Algebra librarY_
+_A `C23` Linear Algebra librarY_

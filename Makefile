@@ -1,5 +1,5 @@
 .PHONY: all
-CFLAGS = -std=c99 -Wall -pedantic -I./include -Wno-newline-eof
+CFLAGS = -std=c2x -Wall -pedantic -I./include -Wno-newline-eof
 
 # Headers.
 HEADERS = ./include/*.h
