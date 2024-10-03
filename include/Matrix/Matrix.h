@@ -38,9 +38,11 @@ typedef struct {
 // Construction.
 
 [[nodiscard]] Matrix *newMatrix(const Natural, const Natural);
+
 [[nodiscard]] Matrix *newMatrixCopy(const Matrix *);
 [[nodiscard]] Matrix *newMatrixSquare(const Natural);
 [[nodiscard]] Matrix *newMatrixSquareDiagonal(const Natural, const Real);
+
 void freeMatrix(Matrix *);
 
 // Copy.
