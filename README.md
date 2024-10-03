@@ -13,9 +13,10 @@ _A `C23` Linear Algebra librarY_
 
 The key components are as follows:
 
-- `include/`: Holds definitions for the structures and methods utilized in the library.
+- `include/`: Holds declarations for the structures and methods utilized in the library.
     - [`include/Vector/`](./include/Vector/): Structures and methods for vectors.
     - [`include/Matrix/`](./include/Matrix/): Structures and methods for matrices.
+- `src/`: Holds definitions for the structures and methods utilized in the library.
 
 ## Setup
 
