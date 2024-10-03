@@ -284,3 +284,23 @@ void divVectorVector(Vector *vector0, const Vector *vector1) {
 
     return vector2;
 }
+
+/**
+ * @brief Dot product.
+ * 
+ * @param vector0 Vector.
+ * @param vector1 Vector.
+ * @return Real 
+ */
+Real dotReturnVectorVector(const Vector *vector0, const Vector *vector1) {
+    #ifndef NDEBUG // Integrity check.
+    assert(vector0->N == vector1->N);
+    #endif
+
+    Real product = 0.0L;
+
+    for(Natural j = 0; j < vector0->N; ++j)
+        product += vector0->elements[j] * vector1->elements[j];
+
+    return product;
+}

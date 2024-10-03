@@ -33,4 +33,6 @@ void divVectorVector(Vector *, const Vector *);
 [[nodiscard]] Vector *mulReturnVectorVector(const Vector *, const Vector *);
 [[nodiscard]] Vector *divReturnVectorVector(const Vector *, const Vector *);
 
+Real dotReturnVectorVector(const Vector *, const Vector *);
+
 #endif
