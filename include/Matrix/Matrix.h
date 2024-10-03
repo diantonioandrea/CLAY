@@ -40,6 +40,10 @@ typedef struct {
 [[nodiscard]] Matrix *newMatrix(const Natural, const Natural);
 void freeMatrix(Matrix *);
 
+// Copy.
+
+void copyMatrix(Matrix *, const Matrix *);
+
 // Access.
 
 Real getMatrixAt(const Matrix *, const Natural, const Natural);

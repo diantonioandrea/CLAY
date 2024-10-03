@@ -40,6 +40,21 @@ void freeVector(Vector *vector) {
 }
 
 /**
+ * @brief Vector copy.
+ * 
+ * @param vector0 Vector.
+ * @param vector1 Vector.
+ */
+void copyVector(Vector *vector0, const Vector *vector1) {
+    #ifndef NDEBUG // Integrity check.
+    assert(vector0->N == vector1->N);
+    #endif
+
+    for(Natural j = 0; j < vector0->N; ++j)
+        vector0->elements[j] = vector1->elements[j];
+}
+
+/**
  * @brief Vector getter.
  * 
  * @param vector Vector.

@@ -43,6 +43,22 @@ void freeMatrix(Matrix *matrix) {
 }
 
 /**
+ * @brief Matrix copy.
+ * 
+ * @param matrix0 Matrix.
+ * @param matrix1 Matrix.
+ */
+void copyMatrix(Matrix *matrix0, const Matrix *matrix1) {
+    #ifndef NDEBUG // Integrity check.
+    assert(matrix0->N == matrix1->N);
+    assert(matrix0->M == matrix1->M);
+    #endif
+
+    for(Natural j = 0; j < matrix0->N * matrix0->M; ++j)
+        matrix0->elements[j] = matrix1->elements[j];
+}
+
+/**
  * @brief Matrix getter.
  * 
  * @param matrix Matrix.

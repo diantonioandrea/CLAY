@@ -34,6 +34,10 @@ typedef struct {
 [[nodiscard]] Vector *newVector(const Natural);
 void freeVector(Vector *);
 
+// Copy.
+
+void copyVector(Vector *, const Vector *);
+
 // Access.
 
 Real getVectorAt(const Vector *, const Natural);
