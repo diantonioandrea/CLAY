@@ -31,7 +31,7 @@ typedef struct {
 
 // Construction.
 
-Vector *newVector(const Natural);
+[[nodiscard]] Vector *newVector(const Natural);
 void freeVector(Vector *);
 
 // Access.

@@ -13,14 +13,24 @@
 
 #include "./Vector.h"
 
-Vector *addVectorScalar(Vector *, const Real);
-Vector *subVectorScalar(Vector *, const Real);
-Vector *mulVectorScalar(Vector *, const Real);
-Vector *divVectorScalar(Vector *, const Real);
-Vector *divScalarVector(Vector *, const Real);
-Vector *addVectorVector(Vector *, const Vector *);
-Vector *subVectorVector(Vector *, const Vector *);
-Vector *mulVectorVector(Vector *, const Vector *);
-Vector *divVectorVector(Vector *, const Vector *);
+void addVectorScalar(Vector *, const Real);
+void subVectorScalar(Vector *, const Real);
+void mulVectorScalar(Vector *, const Real);
+void divVectorScalar(Vector *, const Real);
+void divScalarVector(Vector *, const Real);
+void addVectorVector(Vector *, const Vector *);
+void subVectorVector(Vector *, const Vector *);
+void mulVectorVector(Vector *, const Vector *);
+void divVectorVector(Vector *, const Vector *);
+
+[[nodiscard]] Vector *addReturnVectorScalar(const Vector *, const Real);
+[[nodiscard]] Vector *subReturnVectorScalar(const Vector *, const Real);
+[[nodiscard]] Vector *mulReturnVectorScalar(const Vector *, const Real);
+[[nodiscard]] Vector *divReturnVectorScalar(const Vector *, const Real);
+[[nodiscard]] Vector *divReturnScalarVector(const Vector *, const Real);
+[[nodiscard]] Vector *addReturnVectorVector(const Vector *, const Vector *);
+[[nodiscard]] Vector *subReturnVectorVector(const Vector *, const Vector *);
+[[nodiscard]] Vector *mulReturnVectorVector(const Vector *, const Vector *);
+[[nodiscard]] Vector *divReturnVectorVector(const Vector *, const Vector *);
 
 #endif
