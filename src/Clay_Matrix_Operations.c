@@ -282,3 +282,19 @@ void subMatrixMatrix(Matrix *matrix0, const Matrix *matrix1) {
 
     return matrix2;
 }
+
+/**
+ * @brief Transpose.
+ * 
+ * @param matrix0 Matrix.
+ * @return Matrix* 
+ */
+[[nodiscard]] Matrix *transposeReturnMatrix(const Matrix *matrix0) {
+    Matrix *matrix1 = newMatrix(matrix0->M, matrix0->N);
+
+    for(Natural j = 0; j < matrix0->N; ++j)
+        for(Natural k = 0; k < matrix0->M; ++k)
+            matrix1->elements[k * matrix0->N + j] = matrix0->elements[j * matrix0->M + k];
+
+    return matrix1;
+}

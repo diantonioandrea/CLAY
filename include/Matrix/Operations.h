@@ -33,4 +33,6 @@ void subMatrixMatrix(Matrix *, const Matrix *);
 [[nodiscard]] Vector *mulReturnVectorMatrix(const Vector *, const Matrix *);
 [[nodiscard]] Matrix *mulReturnMatrixMatrix(const Matrix *, const Matrix *);
 
+[[nodiscard]] Matrix *transposeReturnMatrix(const Matrix *);
+
 #endif
