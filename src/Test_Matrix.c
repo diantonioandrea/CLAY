@@ -32,6 +32,7 @@ int main(int argc, char **argv) {
 
     Matrix *m2 = mulReturnMatrixMatrix(m0, m1);
     Matrix *m3 = transposeReturnMatrix(m0);
+    Matrix *m4 = newMatrixSquareDiagonal(3, 1.0L);
 
     Vector *v1 = mulReturnMatrixVector(m1, v0);
     Vector *v2 = mulReturnVectorMatrix(v0, m1);
@@ -40,6 +41,7 @@ int main(int argc, char **argv) {
     printMatrix(m1);
     printMatrix(m2);
     printMatrix(m3);
+    printMatrix(m4);
 
     printVector(v1);
     printVector(v2);
@@ -48,6 +50,7 @@ int main(int argc, char **argv) {
     freeMatrix(m1);
     freeMatrix(m2);
     freeMatrix(m3);
+    freeMatrix(m4);
 
     freeVector(v0);
     freeVector(v1);
