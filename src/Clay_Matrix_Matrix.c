@@ -32,7 +32,7 @@
     return matrix;
 }
 
-[[nodiscard]] Matrix *newMatrixMatrix(const Matrix *matrix0) {
+[[nodiscard]] Matrix *newMatrixCopy(const Matrix *matrix0) {
     Matrix *matrix1 = (Matrix *) malloc(sizeof(Matrix));
 
     matrix1->N = matrix0->N;
