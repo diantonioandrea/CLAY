@@ -345,3 +345,43 @@ void swapColumns(Matrix *matrix, const Natural m0, const Natural m1) {
 
     return matrix1;
 }
+
+/**
+ * @brief Row extraction.
+ * 
+ * @param matrix Matrix.
+ * @param n Row index.
+ * @return Vector* 
+ */
+[[nodiscard]] Vector *returnRow(const Matrix *matrix, const Natural n) {
+    #ifndef NDEBUG // Integrity check.
+    assert(n < matrix->N);
+    #endif
+
+    Vector *vector = newVector(matrix->M);
+
+    for(Natural k = 0; k < matrix->M; ++k)
+        vector->elements[k] = matrix->elements[n * matrix->M + k];
+
+    return vector;
+}
+
+/**
+ * @brief Column extraction.
+ * 
+ * @param matrix Matrix.
+ * @param m Column index.
+ * @return Vector* 
+ */
+[[nodiscard]] Vector *returnColumn(const Matrix *matrix, const Natural m) {
+    #ifndef NDEBUG // Integrity check.
+    assert(m < matrix->M);
+    #endif
+
+    Vector *vector = newVector(matrix->N);
+
+    for(Natural j = 0; j < matrix->N; ++j)
+        vector->elements[j] = matrix->elements[j * matrix->M + m];
+
+    return vector;
+}

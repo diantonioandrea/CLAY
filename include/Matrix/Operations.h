@@ -38,4 +38,7 @@ void swapColumns(Matrix *, const Natural, const Natural);
 
 [[nodiscard]] Matrix *transposeReturnMatrix(const Matrix *);
 
+[[nodiscard]] Vector *returnRow(const Matrix *, const Natural);
+[[nodiscard]] Vector *returnColumn(const Matrix *, const Natural);
+
 #endif
