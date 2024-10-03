@@ -33,6 +33,39 @@
 }
 
 /**
+ * @brief Square matrix constructor.
+ * 
+ * @param N Rows and columns.
+ * @return Matrix* 
+ */
+[[nodiscard]] Matrix *newMatrixSquare(const Natural N) {
+    #ifndef NDEBUG // Integrity check.
+    assert(N > 0);
+    #endif
+
+    Matrix *matrix = (Matrix *) malloc(sizeof(Matrix));
+
+    matrix->N = N;
+    matrix->M = N;
+    matrix->elements = (Real *) calloc(N * N, sizeof(Real));
+
+    return matrix;
+}
+
+[[nodiscard]] Matrix *newMatrixSquareDiagonal(const Natural N, const Real real) {
+    #ifndef NDEBUG // Integrity check.
+    assert(N > 0);
+    #endif
+
+    Matrix *matrix = newMatrixSquare(N);
+
+    for(Natural j = 0; j < N; ++j)
+        matrix->elements[j * (N + 1)] = real;
+
+    return matrix;
+}
+
+/**
  * @brief Matrix destructor.
  * 
  * @param matrix Matrix.
