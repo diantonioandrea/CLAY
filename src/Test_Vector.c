@@ -23,8 +23,11 @@ int main(int argc, char **argv) {
     setVectorAt(v1, 1, 5.0L);
     setVectorAt(v1, 2, 6.0L);
 
+    Vector *v2 = addReturnVectorVector(v0, v1);
+
     printVector(v0);
     printVector(v1);
+    printVector(v2);
 
     addVectorScalar(v0, 1.0L);
     addVectorVector(v1, v0);
@@ -34,6 +37,7 @@ int main(int argc, char **argv) {
 
     freeVector(v0);
     freeVector(v1);
+    freeVector(v2);
 
     return 0;
 }
