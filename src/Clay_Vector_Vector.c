@@ -43,30 +43,30 @@ void freeVector(Vector *vector) {
  * @brief Vector getter.
  * 
  * @param vector Vector.
- * @param index Index.
+ * @param n Index.
  * @return Real Real.
  */
-Real getVectorAt(const Vector *vector, const Natural index) {
+Real getVectorAt(const Vector *vector, const Natural n) {
     #ifndef NDEBUG // Integrity check.
-    assert(index < vector->N);
+    assert(n < vector->N);
     #endif
 
-    return vector->elements[index];
+    return vector->elements[n];
 }
 
 /**
  * @brief Vector setter.
  * 
  * @param vector Vector.
- * @param index Index.
+ * @param n Index.
  * @param real Real.
  */
-void setVectorAt(Vector *vector, const Natural index, const Real real) {
+void setVectorAt(Vector *vector, const Natural n, const Real real) {
     #ifndef NDEBUG // Integrity check.
-    assert(index < vector->N);
+    assert(n < vector->N);
     #endif
     
-    vector->elements[index] = real;
+    vector->elements[n] = real;
 }
 
 /**
