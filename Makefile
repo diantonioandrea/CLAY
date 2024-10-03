@@ -1,5 +1,12 @@
-.PHONY: all
-CFLAGS = -std=c2x -Wall -pedantic -I./include -Wno-newline-eof
+.PHONY: all distclean
+
+ifeq ($(shell uname),Darwin)
+CFLAGS = -std=c2x
+else
+CFLAGS = -std=c23
+endif
+
+CFLAGS += -Wall -pedantic -I./include -Wno-newline-eof
 
 # Headers.
 HEADERS = ./include/*.h
