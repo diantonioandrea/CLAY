@@ -276,9 +276,14 @@ void subMatrixMatrix(Matrix *matrix0, const Matrix *matrix1) {
     Matrix *matrix2 = newMatrix(matrix0->N, matrix1->M);
 
     for(Natural j = 0; j < matrix0->N; ++j)
-        for(Natural k = 0; k < matrix1->M; ++k)
+        for(Natural k = 0; k < matrix1->M; ++k) {
+            Real product = 0.0L;
+
             for(Natural h = 0; h < matrix0->M; ++h)
-                matrix2->elements[j * matrix1->M + k] += matrix0->elements[j * matrix0->M + h] * matrix1->elements[h * matrix1->M + k];
+                product += matrix0->elements[j * matrix0->M + h] * matrix1->elements[h * matrix1->M + k];
+
+            matrix2->elements[j * matrix1->M + k] = product;
+        }
 
     return matrix2;
 }
