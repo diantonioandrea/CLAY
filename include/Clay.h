@@ -20,5 +20,6 @@
 
 // Matrices.
 #include "./Matrix/Matrix.h"
+#include "./Matrix/Operations.h"
 
 #endif
