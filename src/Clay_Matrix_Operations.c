@@ -98,6 +98,48 @@ void subMatrixMatrix(Matrix *matrix0, const Matrix *matrix1) {
 }
 
 /**
+ * @brief Row swap.
+ * 
+ * @param matrix Matrix.
+ * @param r0 Row index.
+ * @param r1 Row index.
+ */
+void swapRows(Matrix *matrix, const Natural r0, const Natural r1) {
+    #ifndef NDEBUG // Integrity check.
+    assert(r0 < matrix->N);
+    assert(r1 < matrix->N);
+    #endif
+
+    if(r0 != r1)
+        for(Natural k = 0; k < matrix->M; ++k) {
+            Real temp = matrix->elements[r0 * matrix->M + k];
+            matrix->elements[r0 * matrix->M + k] = matrix->elements[r1 * matrix->M + k];
+            matrix->elements[r1 * matrix->M + k] = temp;
+        }
+}
+
+/**
+ * @brief Column swap.
+ * 
+ * @param matrix Matrix.
+ * @param c0 Column index.
+ * @param c1 Column index.
+ */
+void swapColumns(Matrix *matrix, const Natural c0, const Natural c1) {
+    #ifndef NDEBUG // Integrity check.
+    assert(c0 < matrix->M);
+    assert(c1 < matrix->M);
+    #endif
+
+    if(c0 != c1)
+        for(Natural j = 0; j < matrix->N; ++j) {
+            Real temp = matrix->elements[j * matrix->M + c0];
+            matrix->elements[j * matrix->M + c0] = matrix->elements[j * matrix->M + c1];
+            matrix->elements[j * matrix->M + c1] = temp;
+        }
+}
+
+/**
  * @brief Matrix + real.
  * 
  * @param matrix0 Matrix.
