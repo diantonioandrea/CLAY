@@ -21,10 +21,10 @@ The key components are as follows:
 The key features are as follows:
 
 - **Decompositions**
-    - LUP.
+    - _LUP_
 - **Linear solvers**
-    - Gaussian elimination with partial pivoting.
-    - LUP.
+    - _Gaussian elimination with partial pivoting_
+    - _LUP_
 
 ## Setup
 
