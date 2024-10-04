@@ -136,53 +136,58 @@ void decomposeQR(const Matrix *A, Matrix *Q, Matrix *R) {
 
     const Natural N = A->N;
     const Natural M = A->M;
+    Real beta = 0.0L;
 
     Matrix *P = newMatrixUniformDiagonal(M, 1.0L);
+    Matrix *Pj = newMatrixSquare(N);
+    Matrix *Wj = newMatrixSquare(N);
+
+    Vector *xj = newVector(N), *zj = newVector(N), *ej = newVector(N), *wj = newVector(N), *qj = newVector(N);
 
     for(Natural j = 0; j < M; ++j) {
         
         // Vectors.
-        Vector *xj = returnColumn(A, j);
-        Vector *zj = newVector(N);
-        Vector *ej = newVector(N);
+        *xj = *returnColumn(A, j);
+        *zj = *newVector(N);
+        *ej = *newVector(N);
 
-        Real beta = ((xj->elements[j] >= 0.0L) ? 1.0L : -1.0L) * norm2ReturnVector(xj);
-        ej->elements[j] = 1.0L;
-
+        beta = ((xj->elements[j] >= 0.0L) ? 1.0L : -1.0L) * norm2ReturnVector(xj);
         zj->elements[j] = beta + xj->elements[j];
+        ej->elements[j] = 1.0L;
 
         for(Natural k = j + 1; k < N; ++k)
             zj->elements[k] = xj->elements[k];
 
         // Householder vector.
-        Vector *wj = divReturnVectorScalar(zj, norm2ReturnVector(zj));
+        *wj = *divReturnVectorScalar(zj, norm2ReturnVector(zj));
 
         // Householder matrix.
-        Matrix *Pj = newMatrixUniformDiagonal(N, 1.0L);
-        Matrix *Wj = newMatrixRankOne(wj, wj);
+        *Pj = *newMatrixUniformDiagonal(N, 1.0L);
+        *Wj = *newMatrixRankOne(wj, wj);
+
         mulMatrixScalar(Wj, 2.0L);
         subMatrixMatrix(Pj, Wj);
 
         *P = *mulReturnMatrixMatrix(P, Pj);
         
         // Q matrix.
-        Vector *qj = mulReturnMatrixVector(P, ej);
+        *qj = *mulReturnMatrixVector(P, ej);
 
         for(Natural k = 0; k < M; ++k)
             Q->elements[k * M + j] = qj->elements[k];
-
-        freeVector(xj);
-        freeVector(zj);
-        freeVector(wj);
-        freeVector(ej);
-        freeVector(qj);
-
-        freeMatrix(Pj);
-        freeMatrix(Wj);
     }
 
     Matrix *QT = transposeReturnMatrix(Q);
     *R = *mulReturnMatrixMatrix(QT, A);
+
+    freeVector(xj);
+    freeVector(zj);
+    freeVector(wj);
+    freeVector(ej);
+    freeVector(qj);
+
+    freeMatrix(Pj);
+    freeMatrix(Wj);
 
     freeMatrix(P);
     freeMatrix(QT);
