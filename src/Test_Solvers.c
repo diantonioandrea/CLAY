@@ -27,22 +27,37 @@ int main(int argc, char **argv) {
 
     decomposeLUP(A, L, U, P);
 
+    Matrix *Q = newMatrixQR_Q(A);
+    Matrix *R = newMatrixQR_R(A);
+
+    decomposeQR(A, Q, R);
+
     Vector *b = newVector(2);
 
     setVectorAt(b, 0, 1.0L);
     setVectorAt(b, 1, 2.0L);
 
-    Vector *x0 = solveReturnLUP(L, U, P, b);
-    Vector *x1 = solveReturnGauss(A, b);
+    Vector *x0 = solveReturnGauss(A, b);
+    Vector *x1 = solveReturnLUP(L, U, P, b);
+    Vector *x2 = solveReturnQR(Q, R, b);
 
     printVector(x0);
     printVector(x1);
+    printVector(x2);
 
     freeMatrix(A);
+
+    freeMatrix(L);
+    freeMatrix(U);
+    freeMatrix(P);
+
+    freeMatrix(Q);
+    freeMatrix(R);
 
     freeVector(b);
     freeVector(x0);
     freeVector(x1);
+    freeVector(x2);
 
     return 0;
 }

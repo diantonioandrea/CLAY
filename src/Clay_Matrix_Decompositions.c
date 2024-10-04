@@ -91,3 +91,99 @@ void decomposeLUP(const Matrix *A, Matrix *L, Matrix *U, Matrix *P) {
         }
     }
 }
+
+// QR.
+
+/**
+ * @brief Q matrix initialization.
+ * 
+ * @param A Matrix.
+ * @return Matrix* 
+ */
+Matrix * newMatrixQR_Q(const Matrix *A) {
+    #ifndef NDEBUG // Integrity check.
+    assert(A->N >= A->M);
+    #endif
+
+    return newMatrixSquare(A->N);
+}
+
+/**
+ * @brief R matrix initialization.
+ * 
+ * @param A Matrix.
+ * @return Matrix* 
+ */
+Matrix * newMatrixQR_R(const Matrix *A) {
+    #ifndef NDEBUG // Integrity check.
+    assert(A->N >= A->M);
+    #endif
+
+    return newMatrix(A->N, A->M);
+}
+
+/**
+ * @brief A = QR decomposition.
+ * 
+ * @param A A matrix.
+ * @param Q Q matrix.
+ * @param R R matrix.
+ */
+void decomposeQR(const Matrix *A, Matrix *Q, Matrix *R) {
+    #ifndef NDEBUG // Integrity check.
+    assert(A->N >= A->M);
+    #endif
+
+    const Natural N = A->N;
+    const Natural M = A->M;
+
+    Matrix *P = newMatrixUniformDiagonal(M, 1.0L);
+
+    for(Natural j = 0; j < M; ++j) {
+        
+        // Vectors.
+        Vector *xj = returnColumn(A, j);
+        Vector *zj = newVector(N);
+        Vector *ej = newVector(N);
+
+        Real beta = ((xj->elements[j] >= 0.0L) ? 1.0L : -1.0L) * norm2ReturnVector(xj);
+        ej->elements[j] = 1.0L;
+
+        zj->elements[j] = beta + xj->elements[j];
+
+        for(Natural k = j + 1; k < N; ++k)
+            zj->elements[k] = xj->elements[k];
+
+        // Householder vector.
+        Vector *wj = divReturnVectorScalar(zj, norm2ReturnVector(zj));
+
+        // Householder matrix.
+        Matrix *Pj = newMatrixUniformDiagonal(N, 1.0L);
+        Matrix *Wj = newMatrixRankOne(wj, wj);
+        mulMatrixScalar(Wj, 2.0L);
+        subMatrixMatrix(Pj, Wj);
+
+        *P = *mulReturnMatrixMatrix(P, Pj);
+        
+        // Q matrix.
+        Vector *qj = mulReturnMatrixVector(P, ej);
+
+        for(Natural k = 0; k < M; ++k)
+            Q->elements[k * M + j] = qj->elements[k];
+
+        freeVector(xj);
+        freeVector(zj);
+        freeVector(wj);
+        freeVector(ej);
+        freeVector(qj);
+
+        freeMatrix(Pj);
+        freeMatrix(Wj);
+    }
+
+    Matrix *QT = transposeReturnMatrix(Q);
+    *R = *mulReturnMatrixMatrix(QT, A);
+
+    freeMatrix(P);
+    freeMatrix(QT);
+}

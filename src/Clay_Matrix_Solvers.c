@@ -113,3 +113,37 @@
 
     return x;
 }
+
+/**
+ * @brief Solves QR = b by back substitution.
+ * 
+ * @param Q Matrix.
+ * @param R Matrix.
+ * @param b0 Vector.
+ * @return Vector* 
+ */
+[[nodiscard]] Vector *solveReturnQR(const Matrix *Q, const Matrix *R, const Vector *b0) {
+    const Natural N = R->N;
+    const Natural M = R->M;
+
+    Matrix *QT = transposeReturnMatrix(Q);
+    Vector *b1 = mulReturnMatrixVector(QT, b0);
+
+    Vector *x = newVector(N);
+
+    // Solves Rx = QTb by back substitution.
+
+    for(Natural j = M; j > 0; --j) {
+        Real sum = 0.0L;
+
+        for(Natural k = j; k < M; ++k)
+            sum += R->elements[(j - 1) * M + k] * x->elements[k];
+
+        x->elements[j - 1] = (b1->elements[j - 1] - sum) / R->elements[(j - 1) * (M + 1)];
+    }
+
+    freeMatrix(QT);
+    freeVector(b1);
+
+    return x;
+}

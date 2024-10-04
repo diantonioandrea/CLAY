@@ -65,6 +65,13 @@
     return matrix;
 }
 
+/**
+ * @brief Uniform diagonal matrix constructor.
+ * 
+ * @param N Rows and columns.
+ * @param real Real.
+ * @return Matrix* 
+ */
 [[nodiscard]] Matrix *newMatrixUniformDiagonal(const Natural N, const Real real) {
     #ifndef NDEBUG // Integrity check.
     assert(N > 0);
@@ -74,6 +81,23 @@
 
     for(Natural j = 0; j < N; ++j)
         matrix->elements[j * (N + 1)] = real;
+
+    return matrix;
+}
+
+/**
+ * @brief Rank-one matrix constructor.
+ * 
+ * @param vector0 Vector.
+ * @param vector1 Vector.
+ * @return Matrix* 
+ */
+[[nodiscard]] Matrix *newMatrixRankOne(const Vector *vector0, const Vector *vector1) {
+    Matrix *matrix = newMatrix(vector0->N, vector1->N);
+
+    for(Natural j = 0; j < vector0->N; ++j)
+        for(Natural k = 0; k < vector1->N; ++k)
+            matrix->elements[j * vector1->N + k] = vector0->elements[j] * vector1->elements[k];
 
     return matrix;
 }

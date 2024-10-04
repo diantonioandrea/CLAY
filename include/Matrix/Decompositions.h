@@ -21,4 +21,11 @@ Matrix * newMatrixLUP_P(const Matrix *);
 
 void decomposeLUP(const Matrix *, Matrix *, Matrix *, Matrix *);
 
+// QR.
+
+Matrix * newMatrixQR_Q(const Matrix *);
+Matrix * newMatrixQR_R(const Matrix *);
+
+void decomposeQR(const Matrix *, Matrix *, Matrix *);
+
 #endif

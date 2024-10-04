@@ -22,9 +22,11 @@ The key features are as follows:
 
 - **Decompositions**
     - _LUP_
+    - _QR_
 - **Linear solvers**
     - _Gaussian elimination with partial pivoting_
     - _LUP_
+    - _QR_
 
 ## Setup
 

@@ -42,6 +42,7 @@ typedef struct {
 [[nodiscard]] Matrix *newMatrixCopy(const Matrix *);
 [[nodiscard]] Matrix *newMatrixSquare(const Natural);
 [[nodiscard]] Matrix *newMatrixUniformDiagonal(const Natural, const Real);
+[[nodiscard]] Matrix *newMatrixRankOne(const Vector *, const Vector *);
 
 void freeMatrix(Matrix *);
 

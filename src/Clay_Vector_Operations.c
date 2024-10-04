@@ -324,3 +324,18 @@ Real dotReturnVectorVector(const Vector *vector0, const Vector *vector1) {
 
     return product;
 }
+
+/**
+ * @brief Norm2.
+ * 
+ * @param vector Vector. 
+ * @return Real 
+ */
+Real norm2ReturnVector(const Vector *vector) {
+    Real sum = 0.0L;
+
+    for(Natural j = 0; j < vector->N; ++j)
+        sum += vector->elements[j] * vector->elements[j];
+
+    return sqrt(sum);
+}
