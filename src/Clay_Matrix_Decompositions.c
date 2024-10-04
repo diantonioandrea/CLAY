@@ -145,11 +145,14 @@ void decomposeQR(const Matrix *A, Matrix *Q, Matrix *R) {
     Vector *xj = newVector(N), *zj = newVector(N), *ej = newVector(N), *wj = newVector(N), *qj = newVector(N);
 
     for(Natural j = 0; j < M; ++j) {
+
+        if(j > 0) {
+            ej->elements[j - 1] = 0.0L;
+            zj->elements[j - 1] = 0.0L;
+        }
         
         // Vectors.
         *xj = *getColumn(A, j);
-        *zj = *newVector(N);
-        *ej = *newVector(N);
 
         beta = ((xj->elements[j] >= 0.0L) ? 1.0L : -1.0L) * norm2ReturnVector(xj);
         zj->elements[j] = beta + xj->elements[j];
