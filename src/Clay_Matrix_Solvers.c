@@ -18,10 +18,9 @@
     const Natural N = A0->N;
 
     Matrix *A1 = newMatrixCopy(A0);
-    Matrix *P0 = newMatrixSquareDiagonal(N, 1.0L);
 
     Vector *b1 = newVectorCopy(b0);
-    Vector *x0 = newVector(N);
+    Vector *x = newVector(N);
 
     // Gaussian elimination.
 
@@ -35,7 +34,6 @@
                 pivot = k;
 
         swapRows(A1, j, pivot);
-        swapRows(P0, j, pivot);
         swapElements(b1, j, pivot);
 
         for(Natural k = j + 1; k < N; ++k) {
@@ -48,29 +46,21 @@
         }   
     }
 
-    Matrix *P1 = transposeReturnMatrix(P0);
-
     // Back substitution.
 
     for(Natural j = N; j > 0; --j) {
         Real sum = 0.0L;
 
         for(Natural k = j; k < N; ++k)
-            sum += A1->elements[(j - 1) * N + k] * x0->elements[k];
+            sum += A1->elements[(j - 1) * N + k] * x->elements[k];
 
-        x0->elements[j - 1] = (b1->elements[j - 1] - sum) / A1->elements[(j - 1) * (N + 1)];
+        x->elements[j - 1] = (b1->elements[j - 1] - sum) / A1->elements[(j - 1) * (N + 1)];
     }
 
-    Vector *x1 = mulReturnMatrixVector(P1, x0);
-
     freeMatrix(A1);
-    freeMatrix(P0);
-    freeMatrix(P1);
-
     freeVector(b1);
-    freeVector(x0);
 
-    return x1;
+    return x;
 }
 
 /**

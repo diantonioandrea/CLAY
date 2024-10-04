@@ -17,8 +17,8 @@ int main(int argc, char **argv) {
     Matrix *A = newMatrixSquare(2);
 
     setMatrixAt(A, 0, 0, 4.0L);
-    setMatrixAt(A, 0, 1, 1.0L);
-    setMatrixAt(A, 1, 0, 1.0L);
+    setMatrixAt(A, 0, 1, 6.0L);
+    setMatrixAt(A, 1, 0, 6.0L);
     setMatrixAt(A, 1, 1, 3.0L);
 
     Matrix *L = newMatrixLUP_L(A);
