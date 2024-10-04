@@ -123,6 +123,22 @@ Matrix * newMatrixQR_R(const Matrix *A) {
 }
 
 /**
+ * @brief Householder matrix.
+ * 
+ * @param vector Vector.
+ * @return Matrix* 
+ */
+Matrix * newMatrixHouseholder(const Vector *vector) {
+    Matrix *matrix = newMatrixSquare(vector->N);
+
+    for(Natural j = 0; j < vector->N; ++j)
+        for(Natural k = 0; k < vector->N; ++k)
+            matrix->elements[j * vector->N + k] = ((j == k) ? 1.0L : 0.0L) - 2.0L * vector->elements[j] * vector->elements[k];
+
+    return matrix;
+}
+
+/**
  * @brief A = QR decomposition.
  * 
  * @param A A matrix.
@@ -140,7 +156,6 @@ void decomposeQR(const Matrix *A, Matrix *Q, Matrix *R) {
 
     Matrix *P = newMatrixUniformDiagonal(M, 1.0L);
     Matrix *Pj = newMatrixSquare(N);
-    Matrix *Wj = newMatrixSquare(N);
 
     Vector *xj = newVector(N), *zj = newVector(N), *ej = newVector(N), *wj = newVector(N), *qj = newVector(N);
 
@@ -165,12 +180,7 @@ void decomposeQR(const Matrix *A, Matrix *Q, Matrix *R) {
         *wj = *divReturnVectorScalar(zj, norm2ReturnVector(zj));
 
         // Householder matrix.
-        *Pj = *newMatrixUniformDiagonal(N, 1.0L);
-        *Wj = *newMatrixRankOne(wj, wj);
-
-        mulMatrixScalar(Wj, 2.0L);
-        subMatrixMatrix(Pj, Wj);
-
+        *Pj = *newMatrixHouseholder(wj);
         *P = *mulReturnMatrixMatrix(P, Pj);
         
         // Q matrix.
@@ -190,7 +200,6 @@ void decomposeQR(const Matrix *A, Matrix *Q, Matrix *R) {
     freeVector(qj);
 
     freeMatrix(Pj);
-    freeMatrix(Wj);
 
     freeMatrix(P);
     freeMatrix(QT);
