@@ -20,6 +20,7 @@
 [[nodiscard]] Vector *solveReturnGauss(const Matrix *A0, const Vector *b0) {
     #ifndef NDEBUG // Integrity check.
     assert(A0->N == A0->M);
+    assert(A0->N == b0->N);
     #endif
 
     const Natural N = A0->N;
@@ -80,6 +81,10 @@
  * @return Vector* 
  */
 [[nodiscard]] Vector *solveReturnLUP(const Matrix *L, const Matrix *U, const Matrix *P, const Vector *b0) {
+    #ifndef NDEBUG // Integrity check.
+    assert(L->N == b0->N);
+    #endif
+
     const Natural N = L->N;
 
     Vector *b1 = mulReturnMatrixVector(P, b0);
@@ -123,13 +128,17 @@
  * @return Vector* 
  */
 [[nodiscard]] Vector *solveReturnQR(const Matrix *Q, const Matrix *R, const Vector *b0) {
+    #ifndef NDEBUG // Integrity check.
+    assert(Q->N == b0->N);
+    #endif
+    
     const Natural N = R->N;
     const Natural M = R->M;
 
     Matrix *QT = transposeReturnMatrix(Q);
     Vector *b1 = mulReturnMatrixVector(QT, b0);
 
-    Vector *x = newVector(N);
+    Vector *x = newVector(M);
 
     // Solves Rx = QTb by back substitution.
 
