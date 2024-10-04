@@ -10,8 +10,6 @@
 
 #include <Clay.h>
 
-#include <Clay.h>
-
 int main(int argc, char **argv) {
 
     Matrix *A = newMatrixSquare(2);
