@@ -18,6 +18,14 @@ The key components are as follows:
     - [`include/Matrix/`](./include/Matrix/): Structures and methods for matrices.
 - `src/`: Holds definitions for the structures and methods utilized in the library.
 
+The key features are as follows:
+
+- **Decompositions**
+    - LUP.
+- **Linear solvers**
+    - Gaussian elimination.
+    - LUP.
+
 ## Setup
 
 ### Cloning the Repository
