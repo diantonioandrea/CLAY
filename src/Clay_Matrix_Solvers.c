@@ -10,6 +10,13 @@
 
 #include <Clay.h>
 
+/**
+ * @brief Solves Ax = b by gaussian elimination.
+ * 
+ * @param A0 Matrix.
+ * @param b0 Vector.
+ * @return Vector* 
+ */
 [[nodiscard]] Vector *solveReturnGauss(const Matrix *A0, const Vector *b0) {
     #ifndef NDEBUG // Integrity check.
     assert(A0->N == A0->M);
@@ -64,7 +71,7 @@
 }
 
 /**
- * @brief Solves LUx = Pb.
+ * @brief Solves LUx = Pb by forward and back substitution.
  * 
  * @param L Matrix.
  * @param U Matrix.
@@ -79,7 +86,7 @@
     Vector *x = newVector(N);
     Vector *y = newVector(N);
 
-    // Solves Ly = b1.
+    // Solves Ly = b1 by forward substitution.
 
     for(Natural j = 0; j < N; ++j) {
         Real sum = 0.0L;
@@ -90,7 +97,7 @@
         y->elements[j] = (b1->elements[j] - sum) / L->elements[j * (N + 1)];
     }
 
-    // Solves Ux = y.
+    // Solves Ux = y by back substitution.
 
     for(Natural j = N; j > 0; --j) {
         Real sum = 0.0L;
