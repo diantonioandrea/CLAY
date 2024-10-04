@@ -72,23 +72,20 @@ void decomposeLUP(const Matrix *A, Matrix *L, Matrix *U, Matrix *P) {
         Natural pivot = j;
 
         for(Natural k = j + 1; k < N; ++k)
-            if(fabs(getMatrixAt(U, k, j)) > fabs(getMatrixAt(U, pivot, j)))
+            if(fabs(U->elements[k * N + j]) > fabs(U->elements[pivot * N + j]))
                 pivot = k;
 
-        // U and P swaps.
+        // Swaps.
         swapRows(U, j, pivot);
         swapRows(P, j, pivot);
-
-        // L swaps.
         swapRowsUntil(L, j, pivot, j);
 
         // Elimination and update.
         for(Natural k = j + 1; k < N; ++k) {
-            setMatrixAt(L, k, j, getMatrixAt(U, k, j) / getMatrixAt(U, j, j));
+            L->elements[k * N + j] = U->elements[k * N + j] / U->elements[j * (N + 1)];
 
-            for(Natural h = 0; h < N; ++h) {
-                setMatrixAt(U, k, h, getMatrixAt(U, k, h) - getMatrixAt(L, k, j) * getMatrixAt(U, j, h));
-            }
+            for(Natural h = 0; h < N; ++h)
+                U->elements[k * N + h] -= L->elements[k * N + j] * U->elements[j * N + h];
         }
     }
 }
