@@ -34,7 +34,7 @@ int main(int argc, char **argv) {
 
     printVector(v0);
     printVector(v1);
-    printf("%.2Lf\n", dotReturnVectorVector(v0, v1));
+    printf("%.4Lf\n", dotReturnVectorVector(v0, v1));
 
     freeVector(v0);
     freeVector(v1);

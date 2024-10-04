@@ -106,7 +106,7 @@ void setVectorAt(Vector *vector, const Natural n, const Real real) {
  */
 void printVector(const Vector *vector) {
     for(Natural j = 0; j < vector->N - 1; ++j)
-        printf("%.2Lf ", vector->elements[j]);
+        printf("%.4Lf ", vector->elements[j]);
 
-    printf("%.2Lf\n", vector->elements[vector->N - 1]);
+    printf("%.4Lf\n", vector->elements[vector->N - 1]);
 }

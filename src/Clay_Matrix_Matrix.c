@@ -170,8 +170,8 @@ void setMatrixAt(Matrix *matrix, const Natural n, const Natural m, const Real re
 void printMatrix(const Matrix *matrix) {
     for(Natural j = 0; j < matrix->N; ++j) {
         for(Natural k = 0; k < matrix->M - 1; ++k)
-            printf("%.2Lf ", matrix->elements[j * matrix->M + k]);
+            printf("%.4Lf ", matrix->elements[j * matrix->M + k]);
         
-        printf("%.2Lf\n", matrix->elements[(j + 1) * matrix->M - 1]);
+        printf("%.4Lf\n", matrix->elements[(j + 1) * matrix->M - 1]);
     }
 }
