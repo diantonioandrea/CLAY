@@ -27,6 +27,8 @@ The key features are as follows:
     - _Gaussian elimination with partial pivoting_
     - _LUP_
     - _QR_
+- **Eigenvalues**
+    - _QR_
 
 ## Setup
 
