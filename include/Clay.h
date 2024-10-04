@@ -22,5 +22,6 @@
 #include "./Matrix/Matrix.h"
 #include "./Matrix/Operations.h"
 #include "./Matrix/Decompositions.h"
+#include "./Matrix/Solvers.h"
 
 #endif
