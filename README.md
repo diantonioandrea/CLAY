@@ -23,7 +23,7 @@ The key features are as follows:
 - **Decompositions**
     - LUP.
 - **Linear solvers**
-    - Gaussian elimination.
+    - Gaussian elimination with partial pivoting.
     - LUP.
 
 ## Setup
