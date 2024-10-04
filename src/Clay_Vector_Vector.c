@@ -30,6 +30,21 @@ Vector *newVector(const Natural N) {
 }
 
 /**
+ * @brief Vector copy constructor.
+ * 
+ * @param vector0 Vector.
+ * @return Vector* 
+ */
+[[nodiscard]] Vector *newVectorCopy(const Vector *vector0) {
+    Vector *vector1 = newVector(vector0->N);
+
+    for(Natural j = 0; j < vector0->N; ++j)
+        vector1->elements[j] = vector0->elements[j];
+
+    return vector1;
+}
+
+/**
  * @brief Vector destructor.
  * 
  * @param vector 

@@ -21,19 +21,28 @@ int main(int argc, char **argv) {
     setMatrixAt(A, 1, 0, 1.0L);
     setMatrixAt(A, 1, 1, 3.0L);
 
+    Matrix *L = newMatrixLUP_L(A);
+    Matrix *U = newMatrixLUP_U(A);
+    Matrix *P = newMatrixLUP_P(A);
+
+    decomposeLUP(A, L, U, P);
+
     Vector *b = newVector(2);
 
     setVectorAt(b, 0, 1.0L);
     setVectorAt(b, 1, 2.0L);
 
-    Vector *x = solveReturnLUP(A, b);
+    Vector *x0 = solveReturnLUP(L, U, P, b);
+    Vector *x1 = solveReturnGauss(A, b);
 
-    printVector(x);
+    printVector(x0);
+    printVector(x1);
 
     freeMatrix(A);
 
     freeVector(b);
-    freeVector(x);
+    freeVector(x0);
+    freeVector(x1);
 
     return 0;
 }

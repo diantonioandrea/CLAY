@@ -32,6 +32,7 @@ typedef struct {
 // Construction.
 
 [[nodiscard]] Vector *newVector(const Natural);
+[[nodiscard]] Vector *newVectorCopy(const Vector *);
 void freeVector(Vector *);
 
 // Copy.

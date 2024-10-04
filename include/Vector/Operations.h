@@ -23,6 +23,8 @@ void subVectorVector(Vector *, const Vector *);
 void mulVectorVector(Vector *, const Vector *);
 void divVectorVector(Vector *, const Vector *);
 
+void swapElements(Vector *, const Natural, const Natural);
+
 [[nodiscard]] Vector *addReturnVectorScalar(const Vector *, const Real);
 [[nodiscard]] Vector *subReturnVectorScalar(const Vector *, const Real);
 [[nodiscard]] Vector *mulReturnVectorScalar(const Vector *, const Real);

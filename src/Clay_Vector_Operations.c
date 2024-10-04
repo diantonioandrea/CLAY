@@ -126,6 +126,26 @@ void divVectorVector(Vector *vector0, const Vector *vector1) {
 }
 
 /**
+ * @brief Element swap.
+ * 
+ * @param vector Vector.
+ * @param n0 Index.
+ * @param n1 Index.
+ */
+void swapElements(Vector *vector, const Natural n0, const Natural n1) {
+    #ifndef NDEBUG // Integrity check.
+    assert(n0 < vector->N);
+    assert(n1 < vector->N);
+    #endif
+
+    if(n0 != n1) {
+        Real temp = vector->elements[n0];
+        vector->elements[n0] = vector->elements[n1];
+        vector->elements[n1] = temp;
+    }
+}
+
+/**
  * @brief Vector + real.
  * 
  * @param vector0 Vector.

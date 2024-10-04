@@ -13,6 +13,7 @@
 
 #include "./Decompositions.h"
 
-[[nodiscard]] Vector *solveReturnLUP(const Matrix *, const Vector *);
+[[nodiscard]] Vector *solveReturnGauss(const Matrix *, const Vector *);
+[[nodiscard]] Vector *solveReturnLUP(const Matrix *, const Matrix *, const Matrix *, const Vector *);
 
 #endif
