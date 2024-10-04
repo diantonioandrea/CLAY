@@ -13,6 +13,12 @@
 
 #include "./Operations.h"
 
+// LUP.
+
+Matrix * newMatrixLUP_L(const Matrix *);
+Matrix * newMatrixLUP_U(const Matrix *);
+Matrix * newMatrixLUP_P(const Matrix *);
+
 void decomposeLUP(const Matrix *, Matrix *, Matrix *, Matrix *);
 
 #endif

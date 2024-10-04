@@ -13,9 +13,6 @@
 int main(int argc, char **argv) {
 
     Matrix *A = newMatrixSquare(3);
-    Matrix *L = newMatrixSquare(3);
-    Matrix *U = newMatrixSquare(3);
-    Matrix *P = newMatrixSquare(3);
 
     setMatrixAt(A, 0, 0, 0.0L);
     setMatrixAt(A, 0, 1, 5.0L);
@@ -26,6 +23,10 @@ int main(int argc, char **argv) {
     setMatrixAt(A, 2, 0, 2.0L);
     setMatrixAt(A, 2, 1, 7.0L);
     setMatrixAt(A, 2, 2, 9.0L);
+
+    Matrix *L = newMatrixLUP_L(A);
+    Matrix *U = newMatrixLUP_U(A);
+    Matrix *P = newMatrixLUP_P(A);
 
     decomposeLUP(A, L, U, P);
 
