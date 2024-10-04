@@ -132,7 +132,6 @@
     assert(Q->N == b0->N);
     #endif
     
-    const Natural N = R->N;
     const Natural M = R->M;
 
     Matrix *QT = transposeReturnMatrix(Q);
