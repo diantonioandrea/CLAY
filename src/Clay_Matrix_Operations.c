@@ -393,13 +393,13 @@ void swapColumnsUntil(Matrix *matrix, const Natural m0, const Natural m1, const 
 }
 
 /**
- * @brief Row extraction.
+ * @brief Row getter.
  * 
  * @param matrix Matrix.
  * @param n Row index.
  * @return Vector* 
  */
-[[nodiscard]] Vector *returnRow(const Matrix *matrix, const Natural n) {
+[[nodiscard]] Vector *getRow(const Matrix *matrix, const Natural n) {
     #ifndef NDEBUG // Integrity check.
     assert(n < matrix->N);
     #endif
@@ -413,13 +413,13 @@ void swapColumnsUntil(Matrix *matrix, const Natural m0, const Natural m1, const 
 }
 
 /**
- * @brief Column extraction.
+ * @brief Column getter.
  * 
  * @param matrix Matrix.
  * @param m Column index.
  * @return Vector* 
  */
-[[nodiscard]] Vector *returnColumn(const Matrix *matrix, const Natural m) {
+[[nodiscard]] Vector *getColumn(const Matrix *matrix, const Natural m) {
     #ifndef NDEBUG // Integrity check.
     assert(m < matrix->M);
     #endif

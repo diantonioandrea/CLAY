@@ -147,7 +147,7 @@ void decomposeQR(const Matrix *A, Matrix *Q, Matrix *R) {
     for(Natural j = 0; j < M; ++j) {
         
         // Vectors.
-        *xj = *returnColumn(A, j);
+        *xj = *getColumn(A, j);
         *zj = *newVector(N);
         *ej = *newVector(N);
 
