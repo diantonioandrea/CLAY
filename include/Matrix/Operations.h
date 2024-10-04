@@ -44,4 +44,10 @@ void swapColumnsUntil(Matrix *, const Natural, const Natural, const Natural);
 [[nodiscard]] Vector *getRow(const Matrix *, const Natural);
 [[nodiscard]] Vector *getColumn(const Matrix *, const Natural);
 
+bool isDiagonal(const Matrix *);
+bool isLowerTriangular(const Matrix *);
+bool isUpperTriangular(const Matrix *);
+
+bool isSymmetric(const Matrix *);
+
 #endif

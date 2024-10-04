@@ -18,4 +18,7 @@ typedef size_t Natural;
 typedef ptrdiff_t Integer;
 typedef long double Real;
 
+// Tolerances.
+#define TOLERANCE 1E-14
+
 #endif
