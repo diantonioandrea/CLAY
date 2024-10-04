@@ -33,7 +33,10 @@ int main(int argc, char **argv) {
     Matrix *LU = mulReturnMatrixMatrix(L, U);
     Matrix *PA = mulReturnMatrixMatrix(P, A);
 
+    printf("LU.\n");
     printMatrix(LU);
+
+    printf("\nPA.\n");
     printMatrix(PA);
 
     freeMatrix(A);
