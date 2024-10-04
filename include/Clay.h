@@ -23,5 +23,6 @@
 #include "./Matrix/Operations.h"
 #include "./Matrix/Decompositions.h"
 #include "./Matrix/Solvers.h"
+#include "./Matrix/Eigenvalues.h"
 
 #endif

@@ -21,4 +21,7 @@ typedef long double Real;
 // Tolerances.
 #define TOLERANCE 1E-14
 
+// Constants.
+#define ITER_MAX 256
+
 #endif
