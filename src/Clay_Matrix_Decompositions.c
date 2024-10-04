@@ -23,7 +23,7 @@ Matrix * newMatrixLUP_L(const Matrix *A) {
     assert(A->N == A->M);
     #endif
 
-    return newMatrixSquareDiagonal(A->N, 1.0L);
+    return newMatrixUniformDiagonal(A->N, 1.0L);
 }
 
 /**
@@ -51,7 +51,7 @@ Matrix * newMatrixLUP_P(const Matrix *A) {
     assert(A->N == A->M);
     #endif
 
-    return newMatrixSquareDiagonal(A->N, 1.0L);
+    return newMatrixUniformDiagonal(A->N, 1.0L);
 }
 
 /**

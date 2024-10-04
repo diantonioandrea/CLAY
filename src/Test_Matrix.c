@@ -32,7 +32,7 @@ int main(int argc, char **argv) {
 
     Matrix *m2 = mulReturnMatrixMatrix(m0, m1);
     Matrix *m3 = transposeReturnMatrix(m0);
-    Matrix *m4 = newMatrixSquareDiagonal(3, 1.0L);
+    Matrix *m4 = newMatrixUniformDiagonal(3, 1.0L);
 
     Vector *v1 = mulReturnMatrixVector(m1, v0);
     Vector *v2 = mulReturnVectorMatrix(v0, m1);

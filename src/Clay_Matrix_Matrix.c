@@ -65,7 +65,7 @@
     return matrix;
 }
 
-[[nodiscard]] Matrix *newMatrixSquareDiagonal(const Natural N, const Real real) {
+[[nodiscard]] Matrix *newMatrixUniformDiagonal(const Natural N, const Real real) {
     #ifndef NDEBUG // Integrity check.
     assert(N > 0);
     #endif
