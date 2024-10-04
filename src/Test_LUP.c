@@ -16,7 +16,7 @@ int main(int argc, char **argv) {
 
     setMatrixAt(A, 0, 0, 0.0L);
     setMatrixAt(A, 0, 1, 5.0L);
-    setMatrixAt(A, 0, 2, 22.0L / 3.0L);
+    setMatrixAt(A, 0, 2, 7.5L);
     setMatrixAt(A, 1, 0, 4.0L);
     setMatrixAt(A, 1, 1, 2.0L);
     setMatrixAt(A, 1, 2, 1.0L);
