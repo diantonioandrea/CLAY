@@ -176,10 +176,8 @@ void decomposeQR(const Matrix *A, Matrix *Q, Matrix *R) {
         for(Natural k = j + 1; k < N; ++k)
             zj->elements[k] = xj->elements[k];
 
-        // Householder vector.
-        *wj = *divReturnVectorScalar(zj, norm2ReturnVector(zj));
-
         // Householder matrix.
+        *wj = *divReturnVectorScalar(zj, norm2ReturnVector(zj));
         *Pj = *newMatrixHouseholder(wj);
         *P = *mulReturnMatrixMatrix(P, Pj);
         
