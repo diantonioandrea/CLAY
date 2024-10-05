@@ -21,11 +21,13 @@ The key components are as follows:
 The key features are as follows:
 
 - **Decompositions**
-    - _LUP_
-    - _QR_
+    - _LUP_ _LU_ decomposition with partial pivoting.
+    - _LL_ Cholesky decomposition.
+    - _QR_ _QR_ decomposition.
 - **Linear solvers**
     - _Gaussian elimination with partial pivoting_
     - _LUP_
+    - _LL_
     - _QR_
 - **Eigenvalues**
     - _QR_

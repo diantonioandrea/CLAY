@@ -155,3 +155,48 @@
 
     return x;
 }
+
+/**
+ * @brief Solves LLTx = b by forward and back substitution.
+ * 
+ * @param L Matrix.
+ * @param b Vector.
+ * @return Vector* 
+ */
+[[nodiscard]] Vector *solveReturnLL(const Matrix *L, const Vector *b) {
+    #ifndef NDEBUG // Integrity check.
+    assert(L->N == b->N);
+    #endif
+
+    const Natural N = L->N;
+
+    Vector *x = newVector(N);
+    Vector *y = newVector(N);
+
+    // Solves Ly = b by forward substitution.
+
+    for(Natural j = 0; j < N; ++j) {
+        Real sum = 0.0L;
+
+        for(Natural k = 0; k < j; ++k)
+            sum += L->elements[j * N + k] * y->elements[k];
+
+        y->elements[j] = (b->elements[j] - sum) / L->elements[j * (N + 1)];
+    }
+
+    // Solves LTx = y by back substitution.
+    // No explicit evaluation of LT.
+
+    for(Natural j = N; j > 0; --j) {
+        Real sum = 0.0L;
+
+        for(Natural k = j; k < N; ++k)
+            sum += L->elements[k * N + (j - 1)] * x->elements[k];
+        
+        x->elements[j - 1] = (y->elements[j - 1] - sum) / L->elements[(j - 1) * (N + 1)];
+    }
+
+    freeVector(y);
+
+    return x;
+}

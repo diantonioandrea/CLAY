@@ -18,7 +18,7 @@
  * @param A Matrix.
  * @return Matrix* 
  */
-Matrix * newMatrixLUP_L(const Matrix *A) {
+Matrix *newMatrixLUP_L(const Matrix *A) {
     #ifndef NDEBUG // Integrity check.
     assert(A->N == A->M);
     #endif
@@ -32,7 +32,7 @@ Matrix * newMatrixLUP_L(const Matrix *A) {
  * @param A Matrix.
  * @return Matrix* 
  */
-Matrix * newMatrixLUP_U(const Matrix *A) {
+Matrix *newMatrixLUP_U(const Matrix *A) {
     #ifndef NDEBUG // Integrity check.
     assert(A->N == A->M);
     #endif
@@ -46,7 +46,7 @@ Matrix * newMatrixLUP_U(const Matrix *A) {
  * @param A Matrix.
  * @return Matrix* 
  */
-Matrix * newMatrixLUP_P(const Matrix *A) {
+Matrix *newMatrixLUP_P(const Matrix *A) {
     #ifndef NDEBUG // Integrity check.
     assert(A->N == A->M);
     #endif
@@ -100,7 +100,7 @@ void decomposeLUP(const Matrix *A, Matrix *L, Matrix *U, Matrix *P) {
  * @param A Matrix.
  * @return Matrix* 
  */
-Matrix * newMatrixQR_Q(const Matrix *A) {
+Matrix *newMatrixQR_Q(const Matrix *A) {
     #ifndef NDEBUG // Integrity check.
     assert(A->N >= A->M);
     #endif
@@ -114,7 +114,7 @@ Matrix * newMatrixQR_Q(const Matrix *A) {
  * @param A Matrix.
  * @return Matrix* 
  */
-Matrix * newMatrixQR_R(const Matrix *A) {
+Matrix *newMatrixQR_R(const Matrix *A) {
     #ifndef NDEBUG // Integrity check.
     assert(A->N >= A->M);
     #endif
@@ -128,7 +128,7 @@ Matrix * newMatrixQR_R(const Matrix *A) {
  * @param vector Vector.
  * @return Matrix* 
  */
-Matrix * newMatrixHouseholder(const Vector *vector) {
+Matrix *newMatrixHouseholder(const Vector *vector) {
     Matrix *matrix = newMatrixSquare(vector->N);
 
     for(Natural j = 0; j < vector->N; ++j)
@@ -201,4 +201,57 @@ void decomposeQR(const Matrix *A, Matrix *Q, Matrix *R) {
 
     freeMatrix(P);
     freeMatrix(QT);
+}
+
+// Cholesky.
+
+/**
+ * @brief L matrix initialization.
+ * 
+ * @param A Matrix.
+ * @return Matrix* 
+ */
+Matrix *newMatrixLL_L(const Matrix *A) {
+    #ifndef NDEBUG // Integrity check.
+    assert(isSymmetric(A));
+    #endif
+
+    return newMatrixSquare(A->N);
+}
+
+/**
+ * @brief A = LLT decomposition. Fails on non-SPD matrices.
+ * 
+ * @param A A matrix.
+ * @param L L matrix.
+ */
+void decomposeLL(const Matrix *A, Matrix *L) {
+    #ifndef NDEBUG // Integrity check.
+    assert(isSymmetric(A));
+    #endif
+
+    const Natural N = A->N;
+    Real sum = 0.0L;
+
+    for(Natural j = 0; j < N; ++j) {
+        for(Natural k = 0; k < j; ++k) {
+            sum = 0.0L;
+
+            for(Natural h = 0; h < k; ++h)
+                sum += L->elements[j * N + h] * L->elements[k * N + h];
+
+            L->elements[j * N + k] = (A->elements[j * N + k] - sum) / L->elements[k * (N + 1)];
+        }
+
+        sum = 0.0L;
+
+        for(Natural h = 0; h < j; ++h)
+            sum += L->elements[j * N + h] * L->elements[j * N + h];
+
+        #ifndef NDEBUG // Integrity check.
+        assert(A->elements[j * (N + 1)] - sum > TOLERANCE);
+        #endif
+
+        L->elements[j * (N + 1)] = sqrt(A->elements[j * (N + 1)] - sum);
+    }
 }
