@@ -329,6 +329,27 @@ void swapColumnsUntil(Matrix *matrix, const Natural m0, const Natural m1, const 
 }
 
 /**
+ * @brief Transpose matrix * vector.
+ * 
+ * @param matrix Matrix.
+ * @param vector0 Vector.
+ * @return Vector* 
+ */
+[[nodiscard]] Vector *mulReturnTransposeMatrixVector(const Matrix *matrix, const Vector *vector0) {
+    #ifndef NDEBUG // Integrity check.
+    assert(matrix->N == vector0->N);
+    #endif
+
+    Vector *vector1 = newVector(matrix->M);
+
+    for(Natural j = 0; j < matrix->M; ++j)
+        for(Natural k = 0; k < matrix->N; ++k)
+            vector1->elements[j] += matrix->elements[k * matrix->N + j] * vector0->elements[k];
+
+    return vector1;
+}
+
+/**
  * @brief Vector * matrix.
  * 
  * @param vector0 Vector.

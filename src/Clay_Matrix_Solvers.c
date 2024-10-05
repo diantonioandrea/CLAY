@@ -134,9 +134,7 @@
     
     const Natural M = R->M;
 
-    Matrix *QT = transposeReturnMatrix(Q);
-    Vector *b1 = mulReturnMatrixVector(QT, b0);
-
+    Vector *b1 = mulReturnTransposeMatrixVector(Q, b0);
     Vector *x = newVector(M);
 
     // Solves Rx = QTb by back substitution.
@@ -150,7 +148,6 @@
         x->elements[j - 1] = (b1->elements[j - 1] - sum) / R->elements[(j - 1) * (M + 1)];
     }
 
-    freeMatrix(QT);
     freeVector(b1);
 
     return x;
