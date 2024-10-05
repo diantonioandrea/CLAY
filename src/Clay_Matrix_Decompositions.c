@@ -188,8 +188,7 @@ void decomposeQR(const Matrix *A, Matrix *Q, Matrix *R) {
             Q->elements[k * M + j] = qj->elements[k];
     }
 
-    Matrix *QT = transposeReturnMatrix(Q);
-    *R = *mulReturnMatrixMatrix(QT, A);
+    *R = *mulReturnTransposeMatrixMatrix(Q, A);
 
     freeVector(xj);
     freeVector(zj);
@@ -200,7 +199,6 @@ void decomposeQR(const Matrix *A, Matrix *Q, Matrix *R) {
     freeMatrix(Pj);
 
     freeMatrix(P);
-    freeMatrix(QT);
 }
 
 // Cholesky.

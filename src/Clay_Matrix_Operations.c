@@ -377,6 +377,33 @@ void swapColumnsUntil(Matrix *matrix, const Natural m0, const Natural m1, const 
 }
 
 /**
+ * @brief Transpose matrix * matrix.
+ * 
+ * @param matrix0 Matrix.
+ * @param matrix1 Matrix.
+ * @return Matrix* 
+ */
+[[nodiscard]] Matrix *mulReturnTransposeMatrixMatrix(const Matrix *matrix0, const Matrix *matrix1) {
+    #ifndef NDEBUG // Integrity check.
+    assert(matrix0->N == matrix1->N);
+    #endif
+
+    Matrix *matrix2 = newMatrix(matrix0->M, matrix1->M);
+
+    for(Natural j = 0; j < matrix0->M; ++j)
+        for(Natural k = 0; k < matrix1->M; ++k) {
+            Real product = 0.0L;
+
+            for(Natural h = 0; h < matrix0->N; ++h)
+                product += matrix0->elements[h * matrix0->N + j] * matrix1->elements[h * matrix1->M + k];
+
+            matrix2->elements[j * matrix1->M + k] = product;
+        }
+
+    return matrix2;
+}
+
+/**
  * @brief Transpose.
  * 
  * @param matrix0 Matrix.

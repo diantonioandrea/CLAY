@@ -37,7 +37,9 @@ void swapColumnsUntil(Matrix *, const Natural, const Natural, const Natural);
 
 [[nodiscard]] Vector *mulReturnMatrixVector(const Matrix *, const Vector *);
 [[nodiscard]] Vector *mulReturnVectorMatrix(const Vector *, const Matrix *);
+
 [[nodiscard]] Matrix *mulReturnMatrixMatrix(const Matrix *, const Matrix *);
+[[nodiscard]] Matrix *mulReturnTransposeMatrixMatrix(const Matrix *, const Matrix *);
 
 [[nodiscard]] Matrix *transposeReturnMatrix(const Matrix *);
 
