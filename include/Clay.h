@@ -15,14 +15,9 @@
 #include "./Base/Base.h"
 
 // Vectors.
-#include "./Vector/Vector.h"
-#include "./Vector/Operations.h"
+#include "./Vector.h"
 
 // Matrices.
-#include "./Matrix/Matrix.h"
-#include "./Matrix/Operations.h"
-#include "./Matrix/Decompositions.h"
-#include "./Matrix/Solvers.h"
-#include "./Matrix/Eigenvalues.h"
+#include "./Matrix.h"
 
 #endif
