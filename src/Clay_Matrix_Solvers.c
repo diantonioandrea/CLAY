@@ -10,6 +10,8 @@
 
 #include <Clay.h>
 
+// Direct.
+
 /**
  * @brief Solves Ax = b by gaussian elimination.
  * 

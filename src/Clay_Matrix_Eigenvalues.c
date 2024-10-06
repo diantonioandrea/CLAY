@@ -31,7 +31,7 @@ Vector *eigenvaluesReturnQR(const Matrix *A0) {
 
     Vector *e = newVector(N);
 
-    for(Natural j = 0; j < ITER_MAX; ++j) {
+    for(Natural j = 0; j < QR_ITER_MAX; ++j) {
         decomposeQR(A1, Q, R);
         *A1 = *mulReturnMatrixMatrix(R, Q);
 

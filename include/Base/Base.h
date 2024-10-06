@@ -18,10 +18,18 @@ typedef size_t Natural;
 typedef ptrdiff_t Integer;
 typedef long double Real;
 
-// Tolerances.
-#define TOLERANCE 1E-14
-
 // Constants.
-#define ITER_MAX 256
+
+// Tolerance.
+#ifndef TOLERANCE
+#define TOLERANCE 1E-14
+#endif
+
+// Iterative methods.
+
+// QR algorithm.
+#ifndef QR_ITER_MAX
+#define QR_ITER_MAX 256
+#endif
 
 #endif
