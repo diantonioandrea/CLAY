@@ -27,7 +27,7 @@ _A `C23` Linear Algebra librarY_
     - _Cholesky Decomposition_
     - _QR Decomposition_
     - _QR Decomposition for Hessenberg Matrices_
-- **Linear Solvers**
+- **Direct Linear Solvers**
     - _Gaussian Elimination with Partial Pivoting_
     - _LU Solver_
     - _Cholesky Solver_
