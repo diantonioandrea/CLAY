@@ -25,10 +25,10 @@ int main(int argc, char **argv) {
 
     decomposeLUP(A, L, U, P);
 
-    Matrix *Q = newMatrixQR_Q(A);
-    Matrix *R = newMatrixQR_R(A);
+    Matrix *Q = newMatrixHessenbergQR_Q(A);
+    Matrix *R = newMatrixHessenbergQR_R(A);
 
-    decomposeQR(A, Q, R);
+    decomposeHessenbergQR(A, Q, R);
 
     Matrix *C = newMatrixLL_L(A);
 
