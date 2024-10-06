@@ -123,6 +123,26 @@ Matrix *newMatrixQR_R(const Matrix *A) {
 }
 
 /**
+ * @brief Q matrix initialization.
+ * 
+ * @param A Hessenmberg matrix.
+ * @return Matrix* 
+ */
+Matrix *newMatrixHessenbergQR_Q(const Matrix *A) {
+    return newMatrixUniformDiagonal(A->N, 1.0L);
+}
+
+/**
+ * @brief R matrix initialization.
+ * 
+ * @param A Hessenberg matrix.
+ * @return Matrix* 
+ */
+Matrix *newMatrixHessenbergQR_R(const Matrix *A) {
+    return newMatrixCopy(A);
+}
+
+/**
  * @brief Householder matrix.
  * 
  * @param vector Vector.
@@ -199,6 +219,55 @@ void decomposeQR(const Matrix *A, Matrix *Q, Matrix *R) {
     freeMatrix(Pj);
 
     freeMatrix(P);
+}
+
+/**
+ * @brief A = QR decomposition.
+ * 
+ * @param A Hessenberg A matrix.
+ * @param Q Q matrix.
+ * @param R R matrix.
+ */
+void decomposeHessenbergQR(const Matrix *A, Matrix *Q, Matrix *R) {
+    #ifndef NDEBUG // Integrity check.
+    assert(A->N >= A->M);
+    #endif
+
+    const Natural N = A->N;
+    const Natural M = A->M;
+
+    Matrix *Gj = newMatrixUniformDiagonal(N, 1.0L);
+    Real alpha = 0.0L, beta = 0.0L, gamma = 0.0L;
+
+    for(Natural j = 0; j < M - 1; ++j) {
+
+        // Rotation coefficients.
+        alpha = R->elements[j * (M + 1)];
+        beta = R->elements[j * (M + 1) + M];
+        gamma = sqrt(alpha * alpha + beta * beta);
+
+        alpha /= gamma;
+        beta /= gamma;
+
+        // Rotation.
+        Gj->elements[j * (N + 1)] = alpha;
+        Gj->elements[(j + 1) * (N + 1)] = alpha;
+        Gj->elements[j * N + j + 1] = beta;
+        Gj->elements[(j + 1) * N + j] = -beta;
+
+        // Q and R update.
+        *R = *mulReturnMatrixMatrix(Gj, R);
+        *Q = *mulReturnMatrixMatrix(Q, Gj);
+
+        // Rotation reset.
+        Gj->elements[j * (N + 1)] = 1.0L;
+        Gj->elements[j * N + j + 1] = 0.0L;
+        Gj->elements[(j + 1) * N + j] = 0.0L;
+    }
+
+    *Q = *transposeReturnMatrix(Q);
+
+    freeMatrix(Gj);
 }
 
 // Cholesky.
