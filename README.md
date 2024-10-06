@@ -20,7 +20,7 @@ _A `C23` Linear Algebra librarY_
     - [`include/Matrix/`](./include/Matrix/): Structures and methods for matrices.
 - `src/`: Holds definitions for the structures and methods utilized in the library.
 
-### Key Feature
+### Key Features
 
 - **Matrix Decompositions**
     - _LU Decomposition with Partial Pivoting_
