@@ -17,6 +17,7 @@
 
 [[nodiscard]] Vector *solveReturnGauss(const Matrix *, const Vector *);
 [[nodiscard]] Vector *solveReturnLUP(const Matrix *, const Matrix *, const Matrix *, const Vector *);
+[[nodiscard]] Vector *solveReturnHereLUP(const Matrix *, const Matrix *, const Vector *);
 [[nodiscard]] Vector *solveReturnQR(const Matrix *, const Matrix *, const Vector *);
 [[nodiscard]] Vector *solveReturnLL(const Matrix *, const Vector *);
 

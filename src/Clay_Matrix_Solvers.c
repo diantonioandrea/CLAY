@@ -122,6 +122,53 @@
 }
 
 /**
+ * @brief Solves LUx = Pb by forward and back substitution.
+ * 
+ * @param LU Matrix.
+ * @param P Matrix.
+ * @param b0 Vector.
+ * @return Vector* 
+ */
+[[nodiscard]] Vector *solveReturnHereLUP(const Matrix *LU, const Matrix *P, const Vector *b0) {
+    #ifndef NDEBUG // Integrity check.
+    assert(LU->N == b0->N);
+    #endif
+
+    const Natural N = LU->N;
+
+    Vector *b1 = mulReturnMatrixVector(P, b0);
+    Vector *x = newVector(N);
+    Vector *y = newVector(N);
+
+    // Solves Ly = b1 by forward substitution.
+
+    for(Natural j = 0; j < N; ++j) {
+        Real sum = 0.0L;
+
+        for(Natural k = 0; k < j; ++k)
+            sum += LU->elements[j * N + k] * y->elements[k];
+
+        y->elements[j] = (b1->elements[j] - sum);
+    }
+
+    // Solves Ux = y by back substitution.
+
+    for(Natural j = N; j > 0; --j) {
+        Real sum = 0.0L;
+
+        for(Natural k = j; k < N; ++k)
+            sum += LU->elements[(j - 1) * N + k] * x->elements[k];
+        
+        x->elements[j - 1] = (y->elements[j - 1] - sum) / LU->elements[(j - 1) * (N + 1)];
+    }
+
+    freeVector(b1);
+    freeVector(y);
+
+    return x;
+}
+
+/**
  * @brief Solves QR = b by back substitution.
  * 
  * @param Q Matrix.

@@ -20,6 +20,7 @@ Matrix *newMatrixLUP_U(const Matrix *);
 Matrix *newMatrixLUP_P(const Matrix *);
 
 void decomposeLUP(const Matrix *, Matrix *, Matrix *, Matrix *);
+void decomposeHereLUP(Matrix *, Matrix *);
 
 // QR.
 

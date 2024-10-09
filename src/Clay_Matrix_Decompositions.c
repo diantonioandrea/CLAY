@@ -92,6 +92,43 @@ void decomposeLUP(const Matrix *A, Matrix *L, Matrix *U, Matrix *P) {
     }
 }
 
+/**
+ * @brief PA = LU in-place decomposition.
+ * 
+ * @param A A Matrix.
+ * @param P P matrix.
+ */
+void decomposeHereLUP(Matrix *A, Matrix *P) {
+    #ifndef NDEBUG // Integrity check.
+    assert(A->N == A->M);
+    #endif
+
+    const Natural N = A->N;
+    for(Natural j = 0; j < N; ++j) {
+
+        // Pivoting.
+        Natural pivot = j;
+
+        for(Natural k = j + 1; k < N; ++k)
+            if(fabs(A->elements[k * N + j]) > fabs(A->elements[pivot * N + j]))
+                pivot = k;
+
+        // Swaps.
+        swapRows(A, j, pivot);
+        swapRows(P, j, pivot);
+
+        // Elimination and update.
+        for(Natural k = j + 1; k < N; ++k) {
+            Real Ljk = A->elements[k * N + j] / A->elements[j * (N + 1)];
+
+            for(Natural h = 0; h < N; ++h)
+                A->elements[k * N + h] -= Ljk * A->elements[j * N + h];
+
+            A->elements[k * N + j] = Ljk;
+        }
+    }
+}
+
 // QR.
 
 /**
