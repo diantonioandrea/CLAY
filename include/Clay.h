@@ -20,4 +20,7 @@
 // Matrices.
 #include "./Matrix.h"
 
+// Sparse matrices.
+#include "./Sparse.h"
+
 #endif
