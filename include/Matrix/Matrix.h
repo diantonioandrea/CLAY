@@ -11,7 +11,7 @@
 #ifndef CLAY_MATRIX_MATRIX
 #define CLAY_MATRIX_MATRIX
 
-#include "../Vector/Vector.h"
+#include "../Vector.h"
 
 typedef struct {
 
