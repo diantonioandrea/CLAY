@@ -359,3 +359,44 @@ void decomposeLL(const Matrix *A, Matrix *L) {
         L->elements[j * (N + 1)] = sqrt(A->elements[j * (N + 1)] - sum);
     }
 }
+
+/**
+ * @brief A = LLT in-place decomposition. Fails on non-SPD matrices.
+ * 
+ * @param A A matrix.
+ * @param L L matrix.
+ */
+void decomposeHereLL(Matrix *A) {
+    #ifndef NDEBUG // Integrity check.
+    assert(isSymmetric(A));
+    #endif
+
+    const Natural N = A->N;
+    Real sum = 0.0L;
+
+    for(Natural j = 0; j < N; ++j) {
+        for(Natural k = 0; k < j; ++k) {
+            sum = 0.0L;
+
+            for(Natural h = 0; h < k; ++h)
+                sum += A->elements[j * N + h] * A->elements[k * N + h];
+
+            A->elements[j * N + k] = (A->elements[j * N + k] - sum) / A->elements[k * (N + 1)];
+        }
+
+        sum = 0.0L;
+
+        for(Natural h = 0; h < j; ++h)
+            sum += A->elements[j * N + h] * A->elements[j * N + h];
+
+        #ifndef NDEBUG // Integrity check.
+        assert(A->elements[j * (N + 1)] - sum > TOLERANCE);
+        #endif
+
+        A->elements[j * (N + 1)] = sqrt(A->elements[j * (N + 1)] - sum);
+    }
+
+    for(Natural j = 0; j < N; ++j)
+        for(Natural k = j + 1; k < N; ++k)
+            A->elements[j * N + k] = 0.0L;
+}

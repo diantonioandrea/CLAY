@@ -39,5 +39,6 @@ void decomposeHessenbergQR(const Matrix *, Matrix *, Matrix *);
 Matrix *newMatrixLL_L(const Matrix *);
 
 void decomposeLL(const Matrix *, Matrix *);
+void decomposeHereLL(Matrix *);
 
 #endif

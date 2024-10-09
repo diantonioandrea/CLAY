@@ -47,6 +47,12 @@ int main(int argc, char **argv) {
 
     decomposeLL(A, C);
 
+    // In-place Cholesky.
+
+    Matrix *HC = newMatrixCopy(A);
+
+    decomposeHereLL(HC);
+
     // RHS.
 
     Vector *b = newVector(2);
@@ -61,12 +67,14 @@ int main(int argc, char **argv) {
     Vector *x2 = solveReturnLUP(L, U, P, b);
     Vector *x3 = solveReturnQR(Q, R, b);
     Vector *x4 = solveReturnLL(C, b);
+    Vector *x5 = solveReturnLL(HC, b);
 
     printVector(x0);
     printVector(x1);
     printVector(x2);
     printVector(x3);
     printVector(x4);
+    printVector(x5);
 
     freeMatrix(A);
 
@@ -87,6 +95,8 @@ int main(int argc, char **argv) {
     freeVector(x1);
     freeVector(x2);
     freeVector(x3);
+    freeVector(x4);
+    freeVector(x5);
 
     return 0;
 }
