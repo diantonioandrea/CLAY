@@ -8,8 +8,8 @@
  * 
  */
 
-#ifndef CLAY_VECTOR
-#define CLAY_VECTOR
+#ifndef CLAY_MATRIX
+#define CLAY_MATRIX
 
 // Matrices.
 #include "./Matrix/Matrix.h"
