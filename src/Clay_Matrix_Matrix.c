@@ -32,6 +32,12 @@
     return matrix;
 }
 
+/**
+ * @brief Matrix copy constructor.
+ * 
+ * @param matrix0 Matrix.
+ * @return Matrix* 
+ */
 [[nodiscard]] Matrix *newMatrixCopy(const Matrix *matrix0) {
     Matrix *matrix1 = (Matrix *) malloc(sizeof(Matrix));
 
