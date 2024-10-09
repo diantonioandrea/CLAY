@@ -69,12 +69,16 @@ int main(int argc, char **argv) {
     Vector *x4 = solveReturnLL(C, b);
     Vector *x5 = solveReturnLL(HC, b);
 
+    // Output.
+
     printVector(x0);
     printVector(x1);
     printVector(x2);
     printVector(x3);
     printVector(x4);
     printVector(x5);
+
+    // Memory management.
 
     freeMatrix(A);
 
