@@ -19,6 +19,11 @@ int main(int argc, char **argv) {
     setMatrixAt(A, 1, 0, 1.0L);
     setMatrixAt(A, 1, 1, 3.0L);
 
+    Vector *b = newVector(2);
+
+    setVectorAt(b, 0, 1.0L);
+    setVectorAt(b, 1, 2.0L);
+
     // LU.
 
     Matrix *LU = newMatrixCopy(A);
@@ -38,13 +43,6 @@ int main(int argc, char **argv) {
     Matrix *L = newMatrixCopy(A);
 
     decomposeLL(L);
-
-    // RHS.
-
-    Vector *b = newVector(2);
-
-    setVectorAt(b, 0, 1.0L);
-    setVectorAt(b, 1, 2.0L);
 
     // Solvers.
 
