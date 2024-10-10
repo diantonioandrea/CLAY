@@ -25,7 +25,7 @@
     Vector *vector1 = newVector(sparse->N);
 
     for(Natural j = 0; j < sparse->N; ++j)
-        for(Natural k = sparse->inner[j]; k < sparse->inner[j + 1]; ++j)
+        for(Natural k = sparse->inner[j]; k < sparse->inner[j + 1]; ++k)
             vector1->elements[j] += sparse->elements[k] * vector0->elements[sparse->outer[k]];
 
     return vector1;
@@ -38,7 +38,7 @@
  * @param sparse Sparse matrix.
  * @return Vector* 
  */
-[[nodiscard]] Vector *mulReturnVectorSparseCSR(const Vector *vector0, const SparseCSC *sparse) {
+[[nodiscard]] Vector *mulReturnVectorSparseCSR(const Vector *vector0, const SparseCSR *sparse) {
     #ifndef NDEBUG // Integrity check.
     assert(vector0->N == sparse->N);
     #endif
@@ -46,7 +46,7 @@
     Vector *vector1 = newVector(sparse->M);
 
     for(Natural j = 0; j < sparse->N; ++j)
-        for(Natural k = sparse->inner[j]; k < sparse->inner[j + 1]; ++j)
+        for(Natural k = sparse->inner[j]; k < sparse->inner[j + 1]; ++k)
             vector1->elements[sparse->outer[k]] += vector0->elements[j] * sparse->elements[k];
     
     return vector1;

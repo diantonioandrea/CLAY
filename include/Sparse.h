@@ -13,5 +13,6 @@
 
 // Sparse matrices.
 #include "./Sparse/Sparse.h"
+#include "./Sparse/Operations.h"
 
 #endif

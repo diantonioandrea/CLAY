@@ -99,8 +99,6 @@
         sparse->inner[k] = index;
     }
 
-    printf("%zu\n", index);
-
     sparse->inner[0] = 0;
     sparse->inner[sparse->M] = sparse0->S;
 

@@ -11,10 +11,10 @@
 #ifndef CLAY_BASE_INCLUDES
 #define CLAY_BASE_INCLUDES
 
+#include <stdbool.h>
 #include <stdlib.h>
 #include <stddef.h>
 #include <stdio.h>
-#include <stdbool.h>
 #include <assert.h>
 #include <math.h>
 
