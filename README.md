@@ -25,9 +25,7 @@ _A `C23` Linear Algebra librarY_
 
 - **Matrix Decompositions**
     - _LU Decomposition with Partial Pivoting_
-    - _In-place LU Decomposition with Partial Pivoting_
     - _Cholesky Decomposition_
-    - _In-place Cholesky Decomposition_
     - _QR Decomposition_
     - _QR Decomposition for Hessenberg Matrices_
 - **Direct Linear Solvers**
