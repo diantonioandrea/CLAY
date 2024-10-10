@@ -127,7 +127,7 @@ void freeSparseCSC(SparseCSC *);
 
 // Access.
 
-[[nodiscard]] Integer findSparseAt(const Sparse *, const Natural, const Natural);
+Integer findSparseAt(const Sparse *, const Natural, const Natural);
 Real getSparseAt(const Sparse *, const Natural, const Natural);
 void setSparseAt(Sparse *, const Natural, const Natural, const Real);
 void delSparseAt(Sparse *, const Natural, const Natural);

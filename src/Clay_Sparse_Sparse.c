@@ -152,7 +152,7 @@ void freeSparseCSC(SparseCSC *sparse) {
  * @param m Column index.
  * @return Integer 
  */
-[[nodiscard]] Integer findSparseAt(const Sparse *sparse, const Natural n, const Natural m) {
+Integer findSparseAt(const Sparse *sparse, const Natural n, const Natural m) {
     #ifndef NDEBUG // Integrity check.
     assert(n < sparse->N);
     assert(m < sparse->M);
