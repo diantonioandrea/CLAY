@@ -49,9 +49,9 @@
     sparse->N = sparse0->N;
     sparse->M = sparse0->M;
 
-    sparse->inner = (Natural *) malloc((sparse->N + 1) * sizeof(Natural));
-    sparse->outer = (Natural *) malloc(sparse0->S * sizeof(Natural));
-    sparse->elements = (Real *) malloc(sparse0->S * sizeof(Real));
+    sparse->inner = (Natural *) calloc((sparse->N + 1), sizeof(Natural));
+    sparse->outer = (Natural *) calloc(sparse0->S, sizeof(Natural));
+    sparse->elements = (Real *) calloc(sparse0->S, sizeof(Real));
 
     Natural index = 0;
 
@@ -63,9 +63,6 @@
 
         sparse->inner[j] = index;
     }
-
-    sparse->inner[0] = 0;
-    sparse->inner[sparse->N] = sparse0->S;
 
     return sparse;
 }
@@ -98,9 +95,6 @@
 
         sparse->inner[k] = index;
     }
-
-    sparse->inner[0] = 0;
-    sparse->inner[sparse->M] = sparse0->S;
 
     return sparse;
 }
