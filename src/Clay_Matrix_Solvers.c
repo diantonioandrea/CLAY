@@ -255,37 +255,12 @@
 /**
  * @brief Solves LUx = Pb by forward and back substitution.
  * 
- * @param L Matrix.
- * @param U Matrix.
- * @param P Matrix.
- * @param b0 Vector.
- * @return Vector* 
- */
-[[nodiscard]] Vector *solveReturnLUP(const Matrix *L, const Matrix *U, const Matrix *P, const Vector *b0) {
-    #ifndef NDEBUG // Integrity check.
-    assert(L->N == b0->N);
-    #endif
-
-    Vector *b1 = mulReturnMatrixVector(P, b0);
-
-    Vector *y = solveReturnReducedLowerTriangular(L, b1);
-    Vector *x = solveReturnUpperTriangular(U, y);
-
-    freeVector(b1);
-    freeVector(y);
-
-    return x;
-}
-
-/**
- * @brief Solves LUx = Pb by forward and back substitution.
- * 
  * @param LU Matrix.
  * @param P Matrix.
  * @param b0 Vector.
  * @return Vector* 
  */
-[[nodiscard]] Vector *solveReturnHereLUP(const Matrix *LU, const Matrix *P, const Vector *b0) {
+[[nodiscard]] Vector *solveReturnLUP(const Matrix *LU, const Matrix *P, const Vector *b0) {
     #ifndef NDEBUG // Integrity check.
     assert(LU->N == b0->N);
     #endif

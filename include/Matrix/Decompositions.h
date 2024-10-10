@@ -15,12 +15,9 @@
 
 // LUP.
 
-Matrix *newMatrixLUP_L(const Matrix *);
-Matrix *newMatrixLUP_U(const Matrix *);
 Matrix *newMatrixLUP_P(const Matrix *);
 
-void decomposeLUP(const Matrix *, Matrix *, Matrix *, Matrix *);
-void decomposeHereLUP(Matrix *, Matrix *);
+void decomposeLUP(Matrix *, Matrix *);
 
 // QR.
 
@@ -36,9 +33,6 @@ void decomposeHessenbergQR(const Matrix *, Matrix *, Matrix *);
 
 // Cholesky.
 
-Matrix *newMatrixLL_L(const Matrix *);
-
-void decomposeLL(const Matrix *, Matrix *);
-void decomposeHereLL(Matrix *);
+void decomposeLL(Matrix *);
 
 #endif

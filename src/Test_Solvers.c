@@ -21,18 +21,10 @@ int main(int argc, char **argv) {
 
     // LU.
 
-    Matrix *L = newMatrixLUP_L(A);
-    Matrix *U = newMatrixLUP_U(A);
+    Matrix *LU = newMatrixCopy(A);
     Matrix *P = newMatrixLUP_P(A);
 
-    decomposeLUP(A, L, U, P);
-
-    // In-place LU.
-
-    Matrix *LU = newMatrixCopy(A);
-    Matrix *HP = newMatrixLUP_P(A);
-
-    decomposeHereLUP(LU, HP);
+    decomposeLUP(LU, P);
 
     // QR.
 
@@ -43,15 +35,9 @@ int main(int argc, char **argv) {
 
     // Cholesky.
 
-    Matrix *C = newMatrixLL_L(A);
+    Matrix *L = newMatrixCopy(A);
 
-    decomposeLL(A, C);
-
-    // In-place Cholesky.
-
-    Matrix *HC = newMatrixCopy(A);
-
-    decomposeHereLL(HC);
+    decomposeLL(L);
 
     // RHS.
 
@@ -63,11 +49,9 @@ int main(int argc, char **argv) {
     // Solvers.
 
     Vector *x0 = solveReturnGauss(A, b);
-    Vector *x1 = solveReturnLUP(L, U, P, b);
-    Vector *x2 = solveReturnLUP(L, U, P, b);
-    Vector *x3 = solveReturnQR(Q, R, b);
-    Vector *x4 = solveReturnLL(C, b);
-    Vector *x5 = solveReturnLL(HC, b);
+    Vector *x1 = solveReturnLUP(LU, P, b);
+    Vector *x2 = solveReturnQR(Q, R, b);
+    Vector *x3 = solveReturnLL(L, b);
 
     // Output.
 
@@ -75,32 +59,24 @@ int main(int argc, char **argv) {
     printVector(x1);
     printVector(x2);
     printVector(x3);
-    printVector(x4);
-    printVector(x5);
 
     // Memory management.
 
     freeMatrix(A);
 
-    freeMatrix(L);
-    freeMatrix(U);
-    freeMatrix(P);
-
     freeMatrix(LU);
-    freeMatrix(HP);
+    freeMatrix(P);
 
     freeMatrix(Q);
     freeMatrix(R);
 
-    freeMatrix(C);
+    freeMatrix(L);
 
     freeVector(b);
     freeVector(x0);
     freeVector(x1);
     freeVector(x2);
     freeVector(x3);
-    freeVector(x4);
-    freeVector(x5);
 
     return 0;
 }
