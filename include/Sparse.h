@@ -14,5 +14,6 @@
 // Sparse matrices.
 #include "./Sparse/Sparse.h"
 #include "./Sparse/Operations.h"
+#include "./Sparse/Solvers.h"
 
 #endif
