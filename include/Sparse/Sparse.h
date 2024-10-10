@@ -77,7 +77,7 @@ typedef struct {
      * @brief Sparse's elements.
      * 
      */
-    Natural *elements;
+    Real *elements;
 
 } SparseCSR;
 
@@ -111,7 +111,7 @@ typedef struct {
      * @brief Sparse's elements.
      * 
      */
-    Natural *elements;
+    Real *elements;
 
 } SparseCSC;
 

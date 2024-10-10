@@ -46,7 +46,26 @@
 [[nodiscard]] SparseCSR *newSparseCSR(const Sparse *sparse0) {
     SparseCSR *sparse = (SparseCSR *) malloc(sizeof(SparseCSR));
 
-    // [!]
+    sparse->N = sparse0->N;
+    sparse->M = sparse0->M;
+
+    sparse->inner = (Natural *) malloc((sparse->N + 1) * sizeof(Natural));
+    sparse->outer = (Natural *) malloc(sparse0->S * sizeof(Natural));
+    sparse->elements = (Real *) malloc(sparse0->S * sizeof(Real));
+
+    Natural index = 0;
+
+    for(Natural j = 1; j <= sparse->N; ++j) {
+        for(; (sparse0->indices[index] < j * sparse->M) && (index < sparse0->S); ++index) {
+            sparse->outer[index] = sparse0->indices[index] % sparse->M;
+            sparse->elements[index] = sparse0->elements[index];
+        }
+
+        sparse->inner[j] = index;
+    }
+
+    sparse->inner[0] = 0;
+    sparse->inner[sparse->N] = sparse0->S;
 
     return sparse;
 }
@@ -60,7 +79,30 @@
 [[nodiscard]] SparseCSC *newSparseCSC(const Sparse *sparse0) {
     SparseCSC *sparse = (SparseCSC *) malloc(sizeof(SparseCSC));
 
-    // [!]
+    sparse->N = sparse0->N;
+    sparse->M = sparse0->M;
+
+    sparse->inner = (Natural *) calloc(sparse0->M + 1, sizeof(Natural));
+    sparse->outer = (Natural *) calloc(sparse0->S, sizeof(Natural));
+    sparse->elements = (Real *) calloc(sparse0->S, sizeof(Real));
+
+    Natural index = 0;
+
+    for(Natural k = 1; k <= sparse->M; ++k) {
+        for(Natural h = 0; h < sparse0->S; ++h)
+            if(sparse0->indices[h] % sparse->M == k - 1) {
+                sparse->outer[index] = sparse0->indices[h] / sparse->M;
+                sparse->elements[index] = sparse0->elements[h];
+                ++index;
+            }
+
+        sparse->inner[k] = index;
+    }
+
+    printf("%zu\n", index);
+
+    sparse->inner[0] = 0;
+    sparse->inner[sparse->M] = sparse0->S;
 
     return sparse;
 }
@@ -247,7 +289,9 @@ Real getSparseCSRAt(const SparseCSR *sparse, const Natural n, const Natural m) {
     assert(m < sparse->M);
     #endif
 
-    // [!]
+    for(Natural k = sparse->inner[n]; k < sparse->inner[n + 1]; ++k)
+        if(sparse->outer[k] == m)
+            return sparse->elements[k];
 
     return 0.0L;
 }
@@ -266,7 +310,9 @@ Real getSparseCSCAt(const SparseCSC *sparse, const Natural n, const Natural m) {
     assert(m < sparse->M);
     #endif
 
-    // [!]
+    for(Natural j = sparse->inner[m]; j < sparse->inner[m + 1]; ++j)
+        if(sparse->outer[j] == n)
+            return sparse->elements[j];
 
     return 0.0L;
 }
@@ -281,9 +327,9 @@ Real getSparseCSCAt(const SparseCSC *sparse, const Natural n, const Natural m) {
 void printSparse(const Sparse *sparse) {
     for(Natural i = 0; i < sparse->S; ++i) {
         const Natural j = sparse->indices[i] / sparse->M;
-        const Natural k = sparse->indices[i] % sparse->N;
+        const Natural k = sparse->indices[i] % sparse->M;
 
-        printf("%zu. (%zu, %zu): %.4Lf\n", i, j, k, sparse->elements[i]);
+        printf("(%zu, %zu): %.4Lf\n", j, k, sparse->elements[i]);
     }
 }
 
@@ -293,7 +339,9 @@ void printSparse(const Sparse *sparse) {
  * @param sparse Sparse matrix.
  */
 void printSparseCSR(const SparseCSR *sparse) {
-
+    for(Natural j = 0; j < sparse->N; ++j)
+        for(Natural k = sparse->inner[j]; k < sparse->inner[j + 1]; ++k)
+            printf("(%zu, %zu): %.4Lf\n", j, sparse->outer[k], sparse->elements[k]);
 }
 
 /**
@@ -302,5 +350,7 @@ void printSparseCSR(const SparseCSR *sparse) {
  * @param sparse Sparse matrix.
  */
 void printSparseCSC(const SparseCSC *sparse) {
-
+    for(Natural k = 0; k < sparse->M; ++k)
+        for(Natural j = sparse->inner[k]; j < sparse->inner[k + 1]; ++j)
+            printf("(%zu, %zu): %.4Lf\n", sparse->outer[j], k, sparse->elements[j]);
 }
