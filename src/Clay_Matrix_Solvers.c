@@ -10,7 +10,193 @@
 
 #include <Clay.h>
 
-// Direct.
+// Standard.
+
+/**
+ * @brief Solves Lx = b by forward substitution.
+ * 
+ * @param L Lower triangular matrix.
+ * @param b Vector.
+ * @return Vector* 
+ */
+[[nodiscard]] Vector *solveReturnLowerTriangular(const Matrix *L, const Vector *b) {
+    #ifndef NDEBUG // Integrity check.
+    assert(L->N == L->M);
+    assert(L->N <= b->N);
+    #endif
+
+    const Natural N = L->N;
+
+    Vector *x = newVector(N);
+
+    // Forward substitution.
+
+    for(Natural j = 0; j < N; ++j) {
+        Real sum = 0.0L;
+
+        for(Natural k = 0; k < j; ++k)
+            sum += L->elements[j * N + k] * x->elements[k];
+
+        x->elements[j] = (b->elements[j] - sum) / L->elements[j * (N + 1)];
+    }
+
+    return x;
+}
+
+/**
+ * @brief Solves Ux = b by backward substitution.
+ * 
+ * @param U Upper triangular matrix.
+ * @param b Vector.
+ * @return Vector* 
+ */
+[[nodiscard]] Vector *solveReturnUpperTriangular(const Matrix *U, const Vector *b) {
+    #ifndef NDEBUG // Integrity check.
+    assert(U->N == U->M);
+    assert(U->N <= b->N);
+    #endif
+
+    const Natural N = U->N;
+
+    Vector *x = newVector(N);
+
+    // Backward substitution.
+
+    for(Natural j = N; j > 0; --j) {
+        Real sum = 0.0L;
+
+        for(Natural k = j; k < N; ++k)
+            sum += U->elements[(j - 1) * N + k] * x->elements[k];
+        
+        x->elements[j - 1] = (b->elements[j - 1] - sum) / U->elements[(j - 1) * (N + 1)];
+    }
+
+    return x;
+}
+
+/**
+ * @brief Solves Lx = b by forward substitution with no division.
+ * 
+ * @param L Lower triangular matrix.
+ * @param b Vector.
+ * @return Vector* 
+ */
+[[nodiscard]] Vector *solveReturnReducedLowerTriangular(const Matrix *L, const Vector *b) {
+    #ifndef NDEBUG // Integrity check.
+    assert(L->N == L->M);
+    assert(L->N <= b->N);
+    #endif
+
+    const Natural N = L->N;
+
+    Vector *x = newVector(N);
+
+    // Forward substitution.
+
+    for(Natural j = 0; j < N; ++j) {
+        Real sum = 0.0L;
+
+        for(Natural k = 0; k < j; ++k)
+            sum += L->elements[j * N + k] * x->elements[k];
+
+        x->elements[j] = b->elements[j] - sum;
+    }
+
+    return x;
+}
+
+/**
+ * @brief Solves Ux = b by backward substitution with no division.
+ * 
+ * @param U Upper triangular matrix.
+ * @param b Vector.
+ * @return Vector* 
+ */
+[[nodiscard]] Vector *solveReturnReducedUpperTriangular(const Matrix *U, const Vector *b) {
+    #ifndef NDEBUG // Integrity check.
+    assert(U->N == U->M);
+    assert(U->N <= b->N);
+    #endif
+
+    const Natural N = U->N;
+
+    Vector *x = newVector(N);
+
+    // Backward substitution.
+
+    for(Natural j = N; j > 0; --j) {
+        Real sum = 0.0L;
+
+        for(Natural k = j; k < N; ++k)
+            sum += U->elements[(j - 1) * N + k] * x->elements[k];
+        
+        x->elements[j - 1] = b->elements[j - 1] - sum;
+    }
+
+    return x;
+}
+
+/**
+ * @brief Solves LTx = b by backward substitution with no explicit transposition.
+ * 
+ * @param L Lower triangular matrix.
+ * @param b Vector.
+ * @return Vector* 
+ */
+[[nodiscard]] Vector *solveReturnTransposeLowerTriangular(const Matrix *L, const Vector *b) {
+    #ifndef NDEBUG // Integrity check.
+    assert(L->N == L->M);
+    assert(L->N <= b->N);
+    #endif
+
+    const Natural N = L->N;
+
+    Vector *x = newVector(N);
+
+    // Backward substitution.
+
+    for(Natural j = N; j > 0; --j) {
+        Real sum = 0.0L;
+
+        for(Natural k = j; k < N; ++k)
+            sum += L->elements[k * N + j - 1] * x->elements[k];
+        
+        x->elements[j - 1] = (b->elements[j - 1] - sum) / L->elements[(j - 1) * (N + 1)];
+    }
+
+    return x;
+}
+
+/**
+ * @brief Solves UTx = b by backward substitution with no explicit transposition.
+ * 
+ * @param U Upper triangular matrix.
+ * @param b Vector.
+ * @return Vector* 
+ */
+[[nodiscard]] Vector *solveReturnTransposeUpperTriangular(const Matrix *U, const Vector *b) {
+    #ifndef NDEBUG // Integrity check.
+    assert(U->N == U->M);
+    assert(U->N <= b->N);
+    #endif
+
+    const Natural N = U->N;
+
+    Vector *x = newVector(N);
+
+    // Forward substitution.
+
+    for(Natural j = 0; j < N; ++j) {
+        Real sum = 0.0L;
+
+        for(Natural k = 0; k < j; ++k)
+            sum += U->elements[k * N + j] * x->elements[k];
+
+        x->elements[j] = (b->elements[j] - sum) / U->elements[j * (N + 1)];
+    }
+
+    return x;
+}
 
 /**
  * @brief Solves Ax = b by gaussian elimination.
@@ -28,9 +214,7 @@
     const Natural N = A0->N;
 
     Matrix *A1 = newMatrixCopy(A0);
-
     Vector *b1 = newVectorCopy(b0);
-    Vector *x = newVector(N);
 
     // Gaussian elimination.
 
@@ -58,20 +242,15 @@
 
     // Back substitution.
 
-    for(Natural j = N; j > 0; --j) {
-        Real sum = 0.0L;
-
-        for(Natural k = j; k < N; ++k)
-            sum += A1->elements[(j - 1) * N + k] * x->elements[k];
-
-        x->elements[j - 1] = (b1->elements[j - 1] - sum) / A1->elements[(j - 1) * (N + 1)];
-    }
+    Vector *x = solveReturnUpperTriangular(A1, b1);
 
     freeMatrix(A1);
     freeVector(b1);
 
     return x;
 }
+
+// Decompositions.
 
 /**
  * @brief Solves LUx = Pb by forward and back substitution.
@@ -87,33 +266,10 @@
     assert(L->N == b0->N);
     #endif
 
-    const Natural N = L->N;
-
     Vector *b1 = mulReturnMatrixVector(P, b0);
-    Vector *x = newVector(N);
-    Vector *y = newVector(N);
 
-    // Solves Ly = b1 by forward substitution.
-
-    for(Natural j = 0; j < N; ++j) {
-        Real sum = 0.0L;
-
-        for(Natural k = 0; k < j; ++k)
-            sum += L->elements[j * N + k] * y->elements[k];
-
-        y->elements[j] = (b1->elements[j] - sum) / L->elements[j * (N + 1)];
-    }
-
-    // Solves Ux = y by back substitution.
-
-    for(Natural j = N; j > 0; --j) {
-        Real sum = 0.0L;
-
-        for(Natural k = j; k < N; ++k)
-            sum += U->elements[(j - 1) * N + k] * x->elements[k];
-        
-        x->elements[j - 1] = (y->elements[j - 1] - sum) / U->elements[(j - 1) * (N + 1)];
-    }
+    Vector *y = solveReturnReducedLowerTriangular(L, b1);
+    Vector *x = solveReturnUpperTriangular(U, y);
 
     freeVector(b1);
     freeVector(y);
@@ -134,33 +290,10 @@
     assert(LU->N == b0->N);
     #endif
 
-    const Natural N = LU->N;
-
     Vector *b1 = mulReturnMatrixVector(P, b0);
-    Vector *x = newVector(N);
-    Vector *y = newVector(N);
 
-    // Solves Ly = b1 by forward substitution.
-
-    for(Natural j = 0; j < N; ++j) {
-        Real sum = 0.0L;
-
-        for(Natural k = 0; k < j; ++k)
-            sum += LU->elements[j * N + k] * y->elements[k];
-
-        y->elements[j] = (b1->elements[j] - sum);
-    }
-
-    // Solves Ux = y by back substitution.
-
-    for(Natural j = N; j > 0; --j) {
-        Real sum = 0.0L;
-
-        for(Natural k = j; k < N; ++k)
-            sum += LU->elements[(j - 1) * N + k] * x->elements[k];
-        
-        x->elements[j - 1] = (y->elements[j - 1] - sum) / LU->elements[(j - 1) * (N + 1)];
-    }
+    Vector *y = solveReturnReducedLowerTriangular(LU, b1);
+    Vector *x = solveReturnUpperTriangular(LU, y);
 
     freeVector(b1);
     freeVector(y);
@@ -180,22 +313,10 @@
     #ifndef NDEBUG // Integrity check.
     assert(Q->N == b0->N);
     #endif
-    
-    const Natural M = R->M;
 
     Vector *b1 = mulReturnTransposeMatrixVector(Q, b0);
-    Vector *x = newVector(M);
 
-    // Solves Rx = QTb by back substitution.
-
-    for(Natural j = M; j > 0; --j) {
-        Real sum = 0.0L;
-
-        for(Natural k = j; k < M; ++k)
-            sum += R->elements[(j - 1) * M + k] * x->elements[k];
-
-        x->elements[j - 1] = (b1->elements[j - 1] - sum) / R->elements[(j - 1) * (M + 1)];
-    }
+    Vector *x = solveReturnUpperTriangular(R, b1);
 
     freeVector(b1);
 
@@ -214,33 +335,8 @@
     assert(L->N == b->N);
     #endif
 
-    const Natural N = L->N;
-
-    Vector *x = newVector(N);
-    Vector *y = newVector(N);
-
-    // Solves Ly = b by forward substitution.
-
-    for(Natural j = 0; j < N; ++j) {
-        Real sum = 0.0L;
-
-        for(Natural k = 0; k < j; ++k)
-            sum += L->elements[j * N + k] * y->elements[k];
-
-        y->elements[j] = (b->elements[j] - sum) / L->elements[j * (N + 1)];
-    }
-
-    // Solves LTx = y by back substitution.
-    // No explicit evaluation of LT.
-
-    for(Natural j = N; j > 0; --j) {
-        Real sum = 0.0L;
-
-        for(Natural k = j; k < N; ++k)
-            sum += L->elements[k * N + (j - 1)] * x->elements[k];
-        
-        x->elements[j - 1] = (y->elements[j - 1] - sum) / L->elements[(j - 1) * (N + 1)];
-    }
+    Vector *y = solveReturnLowerTriangular(L, b);
+    Vector *x = solveReturnTransposeLowerTriangular(L, y);
 
     freeVector(y);
 

@@ -13,9 +13,23 @@
 
 #include "./Decompositions.h"
 
-// Direct.
+// Triangular.
+
+[[nodiscard]] Vector *solveReturnLowerTriangular(const Matrix *, const Vector *);
+[[nodiscard]] Vector *solveReturnUpperTriangular(const Matrix *, const Vector *);
+
+[[nodiscard]] Vector *solveReturnReducedLowerTriangular(const Matrix *, const Vector *);
+[[nodiscard]] Vector *solveReturnReducedUpperTriangular(const Matrix *, const Vector *);
+
+[[nodiscard]] Vector *solveReturnTransposeLowerTriangular(const Matrix *, const Vector *);
+[[nodiscard]] Vector *solveReturnTransposeUpperTriangular(const Matrix *, const Vector *);
+
+// Gauss.
 
 [[nodiscard]] Vector *solveReturnGauss(const Matrix *, const Vector *);
+
+// Decompositions.
+
 [[nodiscard]] Vector *solveReturnLUP(const Matrix *, const Matrix *, const Matrix *, const Vector *);
 [[nodiscard]] Vector *solveReturnHereLUP(const Matrix *, const Matrix *, const Vector *);
 [[nodiscard]] Vector *solveReturnQR(const Matrix *, const Matrix *, const Vector *);
