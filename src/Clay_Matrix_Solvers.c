@@ -10,7 +10,7 @@
 
 #include <Clay.h>
 
-// Standard.
+// Triangular.
 
 /**
  * @brief Solves Lx = b by forward substitution.
@@ -198,6 +198,8 @@
     return x;
 }
 
+// Gauss.
+
 /**
  * @brief Solves Ax = b by gaussian elimination.
  * 
@@ -206,11 +208,6 @@
  * @return Vector* 
  */
 [[nodiscard]] Vector *solveReturnGauss(const Matrix *A0, const Vector *b0) {
-    #ifndef NDEBUG // Integrity check.
-    assert(A0->N == A0->M);
-    assert(A0->N == b0->N);
-    #endif
-
     const Natural N = A0->N;
 
     Matrix *A1 = newMatrixCopy(A0);
@@ -261,10 +258,6 @@
  * @return Vector* 
  */
 [[nodiscard]] Vector *solveReturnLUP(const Matrix *LU, const Matrix *P, const Vector *b0) {
-    #ifndef NDEBUG // Integrity check.
-    assert(LU->N == b0->N);
-    #endif
-
     Vector *b1 = mulReturnMatrixVector(P, b0);
 
     Vector *y = solveReturnReducedLowerTriangular(LU, b1);
@@ -285,10 +278,6 @@
  * @return Vector* 
  */
 [[nodiscard]] Vector *solveReturnQR(const Matrix *Q, const Matrix *R, const Vector *b0) {
-    #ifndef NDEBUG // Integrity check.
-    assert(Q->N == b0->N);
-    #endif
-
     Vector *b1 = mulReturnTransposeMatrixVector(Q, b0);
 
     Vector *x = solveReturnUpperTriangular(R, b1);
@@ -306,10 +295,6 @@
  * @return Vector* 
  */
 [[nodiscard]] Vector *solveReturnLL(const Matrix *L, const Vector *b) {
-    #ifndef NDEBUG // Integrity check.
-    assert(L->N == b->N);
-    #endif
-
     Vector *y = solveReturnLowerTriangular(L, b);
     Vector *x = solveReturnTransposeLowerTriangular(L, y);
 
