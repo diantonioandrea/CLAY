@@ -18,6 +18,7 @@ _A `C23` Linear Algebra librarY_
 - `include/`: Holds declarations for the structures and methods utilized in the library.
     - [`include/Vector/`](./include/Vector/): Structures and methods for vectors.
     - [`include/Matrix/`](./include/Matrix/): Structures and methods for matrices.
+    - [`include/Sparse/`](./include/Sparse/): Structures and methods for sparse matrices.
 - `src/`: Holds definitions for the structures and methods utilized in the library.
 
 ### Key Features
