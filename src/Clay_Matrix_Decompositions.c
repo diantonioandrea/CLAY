@@ -29,7 +29,7 @@ Matrix *newMatrixLUP_P(const Matrix *A) {
 /**
  * @brief PA = LU decomposition.
  * 
- * @param A A Matrix.
+ * @param LU LU Matrix.
  * @param P P matrix.
  */
 void decomposeLUP(Matrix *LU, Matrix *P) {
@@ -250,7 +250,6 @@ void decomposeHessenbergQR(const Matrix *A, Matrix *Q, Matrix *R) {
 /**
  * @brief A = LLT in-place decomposition. Fails on non-SPD matrices.
  * 
- * @param A A matrix.
  * @param L L matrix.
  */
 void decomposeLL(Matrix *L) {
