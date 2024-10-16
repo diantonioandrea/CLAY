@@ -51,6 +51,10 @@ void decomposeLUP(Matrix *LU, Matrix *P) {
         swapRows(LU, j, pivot);
         swapRows(P, j, pivot);
 
+        #ifndef NDEBUG // Integrity check.
+        assert(fabs(LU->elements[j * (N + 1)]) > TOLERANCE);
+        #endif
+
         // Elimination and update.
         for(Natural k = j + 1; k < N; ++k) {
             Real Ljk = LU->elements[k * N + j] / LU->elements[j * (N + 1)];
