@@ -133,47 +133,40 @@ void decomposeQR(Matrix *Q, Matrix *R) {
     const Natural N = R->N;
     const Natural M = R->M;
 
-    Vector *xj = newVector(N), *zj = newVector(N), *wj = newVector(N);
+    Vector *wj = getColumn(R, 0);
 
-    // First step.
-        
-    // Main vector.
-    *xj = *getColumnFrom(R, 0, 0);
-    zj->elements[0] = xj->elements[0] - norm2ReturnVector(xj);
-
-    for(Natural k = 1; k < N; ++k)
-        zj->elements[k] = xj->elements[k];
-
-    // Householder reflector.
-    *wj = *divReturnVectorScalar(zj, norm2ReturnVector(zj));
+    // Step 0.
     
+    // Householder reflector.
+    wj->elements[0] += (wj->elements[0] > 0.0L ? 1.0L : -1.0L) * norm2ReturnVector(wj);
+    divVectorScalar(wj, norm2ReturnVector(wj));
+
     // Q, R matrices.
     mulMatrixHouseholder(Q, wj, 0);
     mulHouseholderMatrix(wj, R, 0);
 
-    // Next steps.
+    // Steps 1, ..., M - 1.
+
     for(Natural j = 1; j < M - 1; ++j) {
 
-        // Cleaning.
-        zj->elements[j - 1] = 0.0L;
-        
-        // Main vector.
-        *xj = *getColumnFrom(R, j, j);
-        zj->elements[j] = xj->elements[j] - norm2ReturnVector(xj);
-
-        for(Natural k = j + 1; k < N; ++k)
-            zj->elements[k] = xj->elements[k];
-
         // Householder reflector.
-        *wj = *divReturnVectorScalar(zj, norm2ReturnVector(zj));
+
+        // Extraction.
+        wj->elements[j - 1] = 0.0L;
+        
+        for(Natural k = j; k < N; ++k)
+            wj->elements[k] = R->elements[k * M + j];
+
+        wj->elements[j] += (wj->elements[0] > 0.0L ? 1.0L : -1.0L) * norm2ReturnVector(wj);
+        
+        // Normalization.
+        divVectorScalar(wj, norm2ReturnVector(wj));
         
         // Q, R matrices.
         mulMatrixHouseholder(Q, wj, 0);
         mulHouseholderMatrix(wj, R, j);
     }
 
-    freeVector(xj);
-    freeVector(zj);
     freeVector(wj);
 }
 
