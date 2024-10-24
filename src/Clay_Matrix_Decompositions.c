@@ -161,10 +161,8 @@ void decomposeQR(Matrix *Q, Matrix *R) {
         *wj = *divReturnVectorScalar(zj, norm2ReturnVector(zj));
         *Pj = *newMatrixHouseholder(wj);
         
-        // Q matrix.
+        // Q, R matrices.
         *Q = *mulReturnMatrixMatrix(Q, Pj);
-
-        // R matrix.
         *R = *mulReturnMatrixMatrix(Pj, R);
     }
 
@@ -210,8 +208,8 @@ void decomposeHessenbergQR(Matrix *Q, Matrix *R) {
         Gj->elements[(j + 1) * N + j] = -s;
 
         // Q and R update.
+        *Q = *mulReturnMatrixMatrix(Gj, Q);
         *R = *mulReturnMatrixMatrix(Gj, R);
-        *Q = *mulReturnMatrixMatrix(Q, Gj);
 
         // Rotation reset.
         Gj->elements[j * (N + 1)] = 1.0L;
