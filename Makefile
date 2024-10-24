@@ -6,7 +6,7 @@ else
 CFLAGS = -std=c23
 endif
 
-CFLAGS += -Wall -pedantic -I./include -Wno-newline-eof
+CFLAGS += -Wall -pedantic -Wno-newline-eof -I./include -march=native -fPIC -Ofast
 
 # Headers.
 HEADERS = ./include/*.h
