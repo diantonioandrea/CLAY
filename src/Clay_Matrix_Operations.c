@@ -484,7 +484,7 @@ void mulMatrixHouseholder(Matrix *matrix, const Vector *vector, const Natural d)
     assert(d < matrix->M);
     #endif
 
-    for(Natural j = d; j < matrix->N; ++j) {
+    for(Natural j = 0; j < matrix->N; ++j) {
         Real sum = 0.0L;
 
         for(Natural h = d; h < matrix->M; ++h)

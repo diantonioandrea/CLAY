@@ -163,7 +163,7 @@ void decomposeQR(Matrix *Q, Matrix *R) {
         divVectorScalar(wj, norm2ReturnVector(wj));
         
         // Q, R matrices.
-        mulMatrixHouseholder(Q, wj, 0);
+        mulMatrixHouseholder(Q, wj, j);
         mulHouseholderMatrix(wj, R, j);
     }
 
