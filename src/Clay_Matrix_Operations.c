@@ -651,7 +651,7 @@ bool isDiagonal(const Matrix *matrix) {
  */
 bool isLowerTriangular(const Matrix *matrix) {
     for(Natural j = 0; j < matrix->N; ++j)
-        for(Natural k = 0; k < j; ++k)
+        for(Natural k = j + 1; k < matrix->M; ++k)
             if(fabs(matrix->elements[j * matrix->M + k]) > TOLERANCE)
                 return false;
 
@@ -667,7 +667,7 @@ bool isLowerTriangular(const Matrix *matrix) {
  */
 bool isUpperTriangular(const Matrix *matrix) {
     for(Natural j = 0; j < matrix->N; ++j)
-        for(Natural k = j + 1; k < matrix->M; ++k)
+        for(Natural k = 0; k < j; ++k)
             if(fabs(matrix->elements[j * matrix->M + k]) > TOLERANCE)
                 return false;
 
