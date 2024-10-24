@@ -204,8 +204,8 @@ void decomposeHessenbergQR(Matrix *Q, Matrix *R) {
         Gj->elements[(j + 1) * N + j] = -s;
 
         // Q and R update.
-        *Q = *mulReturnMatrixMatrix(Gj, Q);
-        *R = *mulReturnMatrixMatrix(Gj, R);
+        *Q = *mulReturnMatrixMatrix(Gj, Q); // Inefficient.
+        *R = *mulReturnMatrixMatrix(Gj, R); // Inefficient.
 
         // Rotation reset.
         Gj->elements[j * (N + 1)] = 1.0L;
