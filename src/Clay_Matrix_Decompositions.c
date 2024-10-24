@@ -84,20 +84,6 @@ Matrix *newMatrixQR_Q(const Matrix *A) {
 }
 
 /**
- * @brief R matrix initialization.
- * 
- * @param A Matrix.
- * @return Matrix* 
- */
-Matrix *newMatrixQR_R(const Matrix *A) {
-    #ifndef NDEBUG // Integrity check.
-    assert(A->N >= A->M);
-    #endif
-
-    return newMatrixCopy(A);
-}
-
-/**
  * @brief Q matrix initialization.
  * 
  * @param A Hessenmberg matrix.
@@ -134,19 +120,18 @@ Matrix *newMatrixHouseholder(const Vector *vector) {
 }
 
 /**
- * @brief A = QR decomposition.
+ * @brief A = QR in-place decomposition.
  * 
- * @param A A matrix.
  * @param Q Q matrix.
  * @param R R matrix.
  */
-void decomposeQR(const Matrix *A, Matrix *Q, Matrix *R) {
+void decomposeQR(Matrix *Q, Matrix *R) {
     #ifndef NDEBUG // Integrity check.
-    assert(A->N >= A->M);
+    assert(R->N >= R->M);
     #endif
 
-    const Natural N = A->N;
-    const Natural M = A->M;
+    const Natural N = R->N;
+    const Natural M = R->M;
     Real beta = 0.0L;
 
     Matrix *Pj = newMatrixSquare(N);

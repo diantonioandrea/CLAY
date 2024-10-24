@@ -36,9 +36,9 @@ int main(int argc, char **argv) {
     // QR.
 
     Matrix *Q = newMatrixHessenbergQR_Q(A);
-    Matrix *R = newMatrixHessenbergQR_R(A);
+    Matrix *R = newMatrixCopy(A);
 
-    decomposeHessenbergQR(A, Q, R);
+    decomposeQR(Q, R);
 
     // Cholesky.
 

@@ -22,13 +22,12 @@ void decomposeLUP(Matrix *, Matrix *);
 // QR.
 
 Matrix *newMatrixQR_Q(const Matrix *);
-Matrix *newMatrixQR_R(const Matrix *);
 Matrix *newMatrixHessenbergQR_Q(const Matrix *);
 Matrix *newMatrixHessenbergQR_R(const Matrix *);
 
 Matrix *newMatrixHouseholder(const Vector *);
 
-void decomposeQR(const Matrix *, Matrix *, Matrix *);
+void decomposeQR(Matrix *, Matrix *);
 void decomposeHessenbergQR(const Matrix *, Matrix *, Matrix *);
 
 // Cholesky.

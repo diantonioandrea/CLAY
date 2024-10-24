@@ -15,34 +15,32 @@
 /**
  * @brief Evaluates A's eigenvalues.
  * 
- * @param A0 Matrix.
+ * @param A Matrix.
  * @return Vector* 
  */
-Vector *eigenvaluesReturnQR(const Matrix *A0) {
+Vector *eigenvaluesReturnQR(const Matrix *A) {
     #ifndef NDEBUG // Integrity check.
-    assert(isSymmetric(A0));
+    assert(isSymmetric(A));
     #endif
 
-    const Natural N = A0->N;
+    const Natural N = A->N;
 
-    Matrix *A1 = newMatrixCopy(A0);
-    Matrix *Q = newMatrixQR_Q(A0);
-    Matrix *R = newMatrixQR_R(A0);
+    Matrix *Q = newMatrixQR_Q(A);
+    Matrix *R = newMatrixCopy(A);
 
     Vector *e = newVector(N);
 
     for(Natural j = 0; j < QR_ITER_MAX; ++j) {
-        decomposeQR(A1, Q, R);
-        *A1 = *mulReturnMatrixMatrix(R, Q);
+        decomposeQR(Q, R);
+        *R = *mulReturnMatrixMatrix(R, Q);
 
-        if(isUpperTriangular(A1))
+        if(isUpperTriangular(R))
             break;
     }
 
     for(Natural j = 0; j < N; ++j)
-        e->elements[j] = A1->elements[j * (N + 1)];
+        e->elements[j] = R->elements[j * (N + 1)];
 
-    freeMatrix(A1);
     freeMatrix(Q);
     freeMatrix(R);
 
