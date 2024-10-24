@@ -132,7 +132,7 @@ void decomposeQR(Matrix *Q, Matrix *R) {
 
     const Natural N = R->N;
     const Natural M = R->M;
-    Real beta = 0.0L;
+    Real s = 0.0L;
 
     Matrix *Pj = newMatrixSquare(N);
     Vector *xj = newVector(N), *zj = newVector(N), *ej = newVector(N), *wj = newVector(N);
@@ -150,8 +150,8 @@ void decomposeQR(Matrix *Q, Matrix *R) {
         for(Natural h = 0; h < j; ++h)
             xj->elements[h] = 0.0L;
 
-        beta = ((xj->elements[j] >= 0.0L) ? 1.0L : -1.0L) * norm2ReturnVector(xj);
-        zj->elements[j] = beta + xj->elements[j];
+        s = ((xj->elements[j] >= 0.0L) ? 1.0L : -1.0L) * norm2ReturnVector(xj);
+        zj->elements[j] = s + xj->elements[j];
         ej->elements[j] = 1.0L;
 
         for(Natural k = j + 1; k < N; ++k)
@@ -177,38 +177,37 @@ void decomposeQR(Matrix *Q, Matrix *R) {
 }
 
 /**
- * @brief A = QR decomposition.
+ * @brief Hessenberg A = QR in-place decomposition.
  * 
- * @param A Hessenberg A matrix.
  * @param Q Q matrix.
  * @param R R matrix.
  */
-void decomposeHessenbergQR(const Matrix *A, Matrix *Q, Matrix *R) {
+void decomposeHessenbergQR(Matrix *Q, Matrix *R) {
     #ifndef NDEBUG // Integrity check.
-    assert(A->N >= A->M);
+    assert(R->N >= R->M);
     #endif
 
-    const Natural N = A->N;
-    const Natural M = A->M;
+    const Natural N = R->N;
+    const Natural M = R->M;
 
     Matrix *Gj = newMatrixUniformDiagonal(N, 1.0L);
-    Real alpha = 0.0L, beta = 0.0L, gamma = 0.0L;
+    Real c = 0.0L, s = 0.0L, g = 0.0L;
 
     for(Natural j = 0; j < M - 1; ++j) {
 
         // Rotation coefficients.
-        alpha = R->elements[j * (M + 1)];
-        beta = R->elements[j * (M + 1) + M];
-        gamma = sqrt(alpha * alpha + beta * beta);
+        c = R->elements[j * (M + 1)];
+        s = R->elements[j * (M + 1) + M];
+        g = sqrt(c * c + s * s);
 
-        alpha /= gamma;
-        beta /= gamma;
+        c /= g;
+        s /= g;
 
         // Rotation.
-        Gj->elements[j * (N + 1)] = alpha;
-        Gj->elements[(j + 1) * (N + 1)] = alpha;
-        Gj->elements[j * N + j + 1] = beta;
-        Gj->elements[(j + 1) * N + j] = -beta;
+        Gj->elements[j * (N + 1)] = c;
+        Gj->elements[(j + 1) * (N + 1)] = c;
+        Gj->elements[j * N + j + 1] = s;
+        Gj->elements[(j + 1) * N + j] = -s;
 
         // Q and R update.
         *R = *mulReturnMatrixMatrix(Gj, R);
