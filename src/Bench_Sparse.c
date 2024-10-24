@@ -21,31 +21,31 @@ int main(int argc, char **argv) {
     }
 
     srand(time(NULL));
-    Integer size = (Integer) atoi(argv[1]);
+    Integer N = (Integer) atoi(argv[1]);
 
     #ifndef NDEBUG // Integrity check.
-    assert(size > 0);
+    assert(N > 0);
     #endif
 
     clock_t start, stop;
 
     // Indices.
 
-    Natural *J = (Natural *) malloc(size * sizeof(Natural));
-    Natural *K = (Natural *) malloc(size * sizeof(Natural));
+    Natural *J = (Natural *) malloc(N * sizeof(Natural));
+    Natural *K = (Natural *) malloc(N * sizeof(Natural));
 
-    for(Natural t = 1; t < size - 1; ++t) {
-        J[t] = rand() % size;
-        K[t] = rand() % size;
+    for(Natural t = 1; t < N - 1; ++t) {
+        J[t] = rand() % N;
+        K[t] = rand() % N;
     }
 
     // START.
 
     start = clock();
 
-    Sparse *s0 = newSparse((Natural) size, (Natural) size);
+    Sparse *s0 = newSparse((Natural) N, (Natural) N);
 
-    for(Natural t = 1; t < size - 1; ++t)
+    for(Natural t = 1; t < N - 1; ++t)
         setSparseAt(s0, J[t], K[t], 1.0L);
 
     stop = clock();
