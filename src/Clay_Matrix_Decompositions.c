@@ -98,34 +98,23 @@ void decomposeQR(Matrix *Q, Matrix *R) {
     const Natural M = R->M;
     const Natural S = (N - 1 < M) ? N - 1 : M;
 
-    Vector *wj = getColumn(R, 0);
+    Vector *wj = newVector(N);
 
-    // Step 0.
-    
-    // Householder reflector.
-    wj->elements[0] += (wj->elements[0] > 0.0L ? 1.0L : -1.0L) * norm2ReturnVector(wj);
-    divVectorScalar(wj, norm2ReturnVector(wj));
-
-    // Q, R matrices.
-    mulMatrixHouseholder(Q, wj, 0);
-    mulHouseholderMatrix(wj, R, 0);
-
-    // Steps 1, ..., S.
-
-    for(Natural j = 1; j < S; ++j) {
+    // QR.
+    for(Natural j = 0; j < S; ++j) {
 
         // Householder reflector.
 
         // Extraction.
-        wj->elements[j - 1] = 0.0L;
-        
         for(Natural k = j; k < N; ++k)
             wj->elements[k] = R->elements[k * M + j];
 
-        wj->elements[j] += (wj->elements[0] > 0.0L ? 1.0L : -1.0L) * norm2ReturnVector(wj);
+        wj->elements[j] += (wj->elements[0] > 0.0L ? 1.0L : -1.0L) * norm2ReturnVectorFrom(wj, j);
         
         // Normalization.
-        divVectorScalar(wj, norm2ReturnVector(wj));
+        normaliseVectorFrom(wj, j);
+
+        // Householder reflection.
         
         // Q, R matrices.
         mulMatrixHouseholder(Q, wj, j);

@@ -38,5 +38,9 @@ void swapElements(Vector *, const Natural, const Natural);
 Real dotReturnVectorVector(const Vector *, const Vector *);
 
 Real norm2ReturnVector(const Vector *);
+Real norm2ReturnVectorFrom(const Vector *, const Natural);
+
+void normaliseVector(const Vector *);
+void normaliseVectorFrom(const Vector *, const Natural);
 
 #endif

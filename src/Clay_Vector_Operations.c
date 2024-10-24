@@ -339,3 +339,62 @@ Real norm2ReturnVector(const Vector *vector) {
 
     return sqrt(sum);
 }
+
+/**
+ * @brief Norm2.
+ * 
+ * @param vector Vector. 
+ * @param n Index.
+ * @return Real 
+ */
+Real norm2ReturnVectorFrom(const Vector *vector, const Natural n) {
+    #ifndef NDEBUG // Integrity check.
+    assert(n < vector->N);
+    #endif
+
+    Real sum = 0.0L;
+
+    for(Natural j = n; j < vector->N; ++j)
+        sum += vector->elements[j] * vector->elements[j];
+
+    return sqrt(sum);
+}
+
+/**
+ * @brief Vector normalisation.
+ * 
+ * @param vector Vector.
+ */
+void normaliseVector(const Vector *vector) {
+    Real sum = 0.0L;
+
+    for(Natural j = 0; j < vector->N; ++j)
+        sum += vector->elements[j] * vector->elements[j];
+
+    const Real norm = sqrt(sum);
+
+    for(Natural j = 0; j < vector->N; ++j)
+        vector->elements[j] /= norm;
+}
+
+/**
+ * @brief Vector normalisation.
+ * 
+ * @param vector Vector.
+ * @param n Index.
+ */
+void normaliseVectorFrom(const Vector *vector, const Natural n) {
+    #ifndef NDEBUG // Integrity check.
+    assert(n < vector->N);
+    #endif
+
+    Real sum = 0.0L;
+
+    for(Natural j = n; j < vector->N; ++j)
+        sum += vector->elements[j] * vector->elements[j];
+
+    const Real norm = sqrt(sum);
+
+    for(Natural j = n; j < vector->N; ++j)
+        vector->elements[j] /= norm;
+}
