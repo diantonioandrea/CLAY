@@ -22,9 +22,6 @@ void decomposeLUP(Matrix *, Matrix *);
 // QR.
 
 Matrix *newMatrixQR_Q(const Matrix *);
-Matrix *newMatrixHessenbergQR_Q(const Matrix *);
-
-Matrix *newMatrixHouseholder(const Vector *);
 
 void decomposeQR(Matrix *, Matrix *);
 void decomposeHessenbergQR(Matrix *, Matrix *);

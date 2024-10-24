@@ -84,42 +84,6 @@ Matrix *newMatrixQR_Q(const Matrix *A) {
 }
 
 /**
- * @brief Q matrix initialization.
- * 
- * @param A Hessenmberg matrix.
- * @return Matrix* 
- */
-Matrix *newMatrixHessenbergQR_Q(const Matrix *A) {
-    return newMatrixUniformDiagonal(A->N, 1.0L);
-}
-
-/**
- * @brief R matrix initialization.
- * 
- * @param A Hessenberg matrix.
- * @return Matrix* 
- */
-Matrix *newMatrixHessenbergQR_R(const Matrix *A) {
-    return newMatrixCopy(A);
-}
-
-/**
- * @brief Householder matrix.
- * 
- * @param vector Vector.
- * @return Matrix* 
- */
-Matrix *newMatrixHouseholder(const Vector *vector) {
-    Matrix *matrix = newMatrixSquare(vector->N);
-
-    for(Natural j = 0; j < vector->N; ++j)
-        for(Natural k = 0; k < vector->N; ++k)
-            matrix->elements[j * vector->N + k] = ((j == k) ? 1.0L : 0.0L) - 2.0L * vector->elements[j] * vector->elements[k];
-
-    return matrix;
-}
-
-/**
  * @brief A = QR in-place decomposition.
  * 
  * @param Q Q matrix.

@@ -35,7 +35,7 @@ int main(int argc, char **argv) {
 
     // QR.
 
-    Matrix *Q = newMatrixHessenbergQR_Q(A);
+    Matrix *Q = newMatrixQR_Q(A);
     Matrix *R = newMatrixCopy(A);
 
     decomposeQR(Q, R);
