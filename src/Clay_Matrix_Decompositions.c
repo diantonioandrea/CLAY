@@ -132,43 +132,49 @@ void decomposeQR(Matrix *Q, Matrix *R) {
 
     const Natural N = R->N;
     const Natural M = R->M;
-    Real beta = 0.0L;
 
-    Matrix *Pj = newMatrixSquare(N);
-    Vector *xj = newVector(N), *zj = newVector(N), *ej = newVector(N), *wj = newVector(N);
+    Vector *xj = newVector(N), *zj = newVector(N), *wj = newVector(N);
 
-    for(Natural j = 0; j < M; ++j) {
+    // First step.
+        
+    // Main vector.
+    *xj = *getColumnFrom(R, 0, 0);
+    zj->elements[0] = xj->elements[0] - norm2ReturnVector(xj);
 
-        if(j > 0) {
-            ej->elements[j - 1] = 0.0L;
-            zj->elements[j - 1] = 0.0L;
-        }
+    for(Natural k = 1; k < N; ++k)
+        zj->elements[k] = xj->elements[k];
+
+    // Householder reflector.
+    *wj = *divReturnVectorScalar(zj, norm2ReturnVector(zj));
+    
+    // Q, R matrices.
+    mulMatrixHouseholder(Q, wj, 0);
+    mulHouseholderMatrix(wj, R, 0);
+
+    // Next steps.
+    for(Natural j = 1; j < M - 1; ++j) {
+
+        // Cleaning.
+        zj->elements[j - 1] = 0.0L;
         
         // Main vector.
         *xj = *getColumnFrom(R, j, j);
-
-        beta = ((xj->elements[j] >= 0.0L) ? 1.0L : -1.0L) * norm2ReturnVector(xj);
-        zj->elements[j] = beta + xj->elements[j];
-        ej->elements[j] = 1.0L;
+        zj->elements[j] = xj->elements[j] - norm2ReturnVector(xj);
 
         for(Natural k = j + 1; k < N; ++k)
             zj->elements[k] = xj->elements[k];
 
-        // Householder matrix.
+        // Householder reflector.
         *wj = *divReturnVectorScalar(zj, norm2ReturnVector(zj));
-        *Pj = *newMatrixHouseholder(wj);
         
         // Q, R matrices.
-        *Q = *mulReturnMatrixMatrix(Q, Pj); // Needs improving.
-        *R = *mulReturnMatrixMatrix(Pj, R); // Needs improving.
+        mulMatrixHouseholder(Q, wj, 0);
+        mulHouseholderMatrix(wj, R, j);
     }
 
     freeVector(xj);
     freeVector(zj);
     freeVector(wj);
-    freeVector(ej);
-
-    freeMatrix(Pj);
 }
 
 /**

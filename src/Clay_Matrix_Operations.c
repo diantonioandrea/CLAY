@@ -471,6 +471,56 @@ void swapColumnsUntil(Matrix *matrix, const Natural m0, const Natural m1, const 
 }
 
 /**
+ * @brief Matrix * Householder reflector.
+ * 
+ * @param matrix Matrix.
+ * @param vector Householder reflector.
+ * @param d Depth.
+ */
+void mulMatrixHouseholder(Matrix *matrix, const Vector *vector, const Natural d) {
+    #ifndef NDEBUG // Integrity check.
+    assert(vector->N == matrix->N);
+    assert(d < matrix->N);
+    assert(d < matrix->M);
+    #endif
+
+    for(Natural j = d; j < matrix->N; ++j) {
+        Real sum = 0.0L;
+
+        for(Natural h = d; h < matrix->M; ++h)
+            sum += matrix->elements[j * matrix->M + h] * vector->elements[h];
+
+        for(Natural k = d; k < matrix->M; ++k)
+            matrix->elements[j * matrix->M + k] -= 2.0L * vector->elements[k] * sum;
+    }
+}
+
+/**
+ * @brief Householder reflector * matrix.
+ * 
+ * @param vector Householder reflector.
+ * @param matrix Matrix.
+ * @param d Depth.
+ */
+void mulHouseholderMatrix(const Vector *vector, Matrix *matrix, const Natural d) {
+    #ifndef NDEBUG // Integrity check.
+    assert(vector->N == matrix->N);
+    assert(d < matrix->N);
+    assert(d < matrix->M);
+    #endif
+
+    for(Natural k = d; k < matrix->M; ++k) {
+        Real sum = 0.0L;
+
+        for(Natural h = d; h < matrix->N; ++h)
+            sum += vector->elements[h] * matrix->elements[h * matrix->M + k];
+
+        for(Natural j = d; j < matrix->N; ++j)
+            matrix->elements[j * matrix->M + k] -= 2.0L * vector->elements[j] * sum;
+    }
+}
+
+/**
  * @brief Transpose.
  * 
  * @param matrix0 Matrix.

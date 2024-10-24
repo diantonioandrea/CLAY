@@ -45,6 +45,9 @@ void swapColumnsUntil(Matrix *, const Natural, const Natural, const Natural);
 [[nodiscard]] Matrix *mulReturnMatrixMatrix(const Matrix *, const Matrix *);
 [[nodiscard]] Matrix *mulReturnTransposeMatrixMatrix(const Matrix *, const Matrix *);
 
+void mulMatrixHouseholder(Matrix *, const Vector *, const Natural);
+void mulHouseholderMatrix(const Vector *, Matrix *, const Natural);
+
 [[nodiscard]] Matrix *transposeReturnMatrix(const Matrix *);
 
 [[nodiscard]] Vector *getRow(const Matrix *, const Natural);
