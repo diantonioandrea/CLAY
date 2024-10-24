@@ -485,9 +485,10 @@ void mulMatrixHouseholder(Matrix *matrix, const Vector *vector, const Natural d)
     #endif
 
     register Natural j, h, k;
+    register Real sum;
 
     for(j = 0; j < matrix->N; ++j) {
-        Real sum = 0.0L;
+        sum = 0.0L;
 
         for(h = d; h < matrix->M; ++h)
             sum += matrix->elements[j * matrix->M + h] * vector->elements[h];
@@ -512,9 +513,10 @@ void mulHouseholderMatrix(const Vector *vector, Matrix *matrix, const Natural d)
     #endif
 
     register Natural j, h, k;
+    register Real sum;
 
     for(k = d; k < matrix->M; ++k) {
-        Real sum = 0.0L;
+        sum = 0.0L;
 
         for(h = d; h < matrix->N; ++h)
             sum += vector->elements[h] * matrix->elements[h * matrix->M + k];

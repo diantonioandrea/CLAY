@@ -333,7 +333,7 @@ Real dotReturnVectorVector(const Vector *vector0, const Vector *vector1) {
  */
 Real norm2ReturnVector(const Vector *vector) {
     register Natural j;
-    Real sum = 0.0L;
+    register Real sum = 0.0L;
 
     for(j = 0; j < vector->N; ++j)
         sum += vector->elements[j] * vector->elements[j];
@@ -354,7 +354,7 @@ Real norm2ReturnVectorFrom(const Vector *vector, const Natural n) {
     #endif
 
     register Natural j;
-    Real sum = 0.0L;
+    register Real sum = 0.0L;
 
     for(j = n; j < vector->N; ++j)
         sum += vector->elements[j] * vector->elements[j];
@@ -369,7 +369,7 @@ Real norm2ReturnVectorFrom(const Vector *vector, const Natural n) {
  */
 void normaliseVector(const Vector *vector) {
     register Natural j;
-    Real sum = 0.0L;
+    register Real sum = 0.0L;
 
     for(j = 0; j < vector->N; ++j)
         sum += vector->elements[j] * vector->elements[j];
@@ -392,7 +392,7 @@ void normaliseVectorFrom(const Vector *vector, const Natural n) {
     #endif
 
     register Natural j;
-    Real sum = 0.0L;
+    register Real sum = 0.0L;
 
     for(j = n; j < vector->N; ++j)
         sum += vector->elements[j] * vector->elements[j];
