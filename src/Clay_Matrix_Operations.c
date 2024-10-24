@@ -527,6 +527,50 @@ void swapColumnsUntil(Matrix *matrix, const Natural m0, const Natural m1, const 
 }
 
 /**
+ * @brief Partial row getter.
+ * 
+ * @param matrix Matrix.
+ * @param n Row index.
+ * @param m Column index.
+ * @return Vector* 
+ */
+[[nodiscard]] Vector *getRowFrom(const Matrix *matrix, const Natural n, const Natural m) {
+    #ifndef NDEBUG // Integrity check.
+    assert(n < matrix->N);
+    assert(m < matrix->M);
+    #endif
+
+    Vector *vector = newVector(matrix->M);
+
+    for(Natural k = m; k < matrix->M; ++k)
+        vector->elements[k] = matrix->elements[n * matrix->M + k];
+
+    return vector;
+} 
+
+/**
+ * @brief Partial column getter.
+ * 
+ * @param matrix Matrix.
+ * @param m Column index.
+ * @param n Row index.
+ * @return Vector* 
+ */
+[[nodiscard]] Vector *getColumnFrom(const Matrix *matrix, const Natural m, const Natural n) {
+    #ifndef NDEBUG // Integrity check.
+    assert(n < matrix->N);
+    assert(m < matrix->M);
+    #endif
+
+    Vector *vector = newVector(matrix->N);
+
+    for(Natural j = n; j < matrix->N; ++j)
+        vector->elements[j] = matrix->elements[j * matrix->M + m];
+
+    return vector;
+}
+
+/**
  * @brief Diagonal check.
  * 
  * @param matrix Matrix.

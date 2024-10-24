@@ -132,7 +132,7 @@ void decomposeQR(Matrix *Q, Matrix *R) {
 
     const Natural N = R->N;
     const Natural M = R->M;
-    Real s = 0.0L;
+    Real beta = 0.0L;
 
     Matrix *Pj = newMatrixSquare(N);
     Vector *xj = newVector(N), *zj = newVector(N), *ej = newVector(N), *wj = newVector(N);
@@ -144,14 +144,11 @@ void decomposeQR(Matrix *Q, Matrix *R) {
             zj->elements[j - 1] = 0.0L;
         }
         
-        // Vectors.
-        *xj = *getColumn(R, j);
+        // Main vector.
+        *xj = *getColumnFrom(R, j, j);
 
-        for(Natural h = 0; h < j; ++h)
-            xj->elements[h] = 0.0L;
-
-        s = ((xj->elements[j] >= 0.0L) ? 1.0L : -1.0L) * norm2ReturnVector(xj);
-        zj->elements[j] = s + xj->elements[j];
+        beta = ((xj->elements[j] >= 0.0L) ? 1.0L : -1.0L) * norm2ReturnVector(xj);
+        zj->elements[j] = beta + xj->elements[j];
         ej->elements[j] = 1.0L;
 
         for(Natural k = j + 1; k < N; ++k)
@@ -162,8 +159,8 @@ void decomposeQR(Matrix *Q, Matrix *R) {
         *Pj = *newMatrixHouseholder(wj);
         
         // Q, R matrices.
-        *Q = *mulReturnMatrixMatrix(Q, Pj);
-        *R = *mulReturnMatrixMatrix(Pj, R);
+        *Q = *mulReturnMatrixMatrix(Q, Pj); // Needs improving.
+        *R = *mulReturnMatrixMatrix(Pj, R); // Needs improving.
     }
 
     freeVector(xj);
