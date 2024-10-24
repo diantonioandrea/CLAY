@@ -94,19 +94,21 @@ void decomposeQR(Matrix *Q, Matrix *R) {
     assert(R->N >= R->M);
     #endif
 
-    const Natural N = R->N;
-    const Natural M = R->M;
-    const Natural S = (N - 1 < M) ? N - 1 : M;
+    const register Natural N = R->N;
+    const register Natural M = R->M;
+    const register Natural S = (N - 1 < M) ? N - 1 : M;
+    register Natural j;
+    register Natural k;
 
     Vector *wj = newVector(N);
 
     // QR.
-    for(Natural j = 0; j < S; ++j) {
+    for(j = 0; j < S; ++j) {
 
         // Householder reflector.
 
         // Extraction.
-        for(Natural k = j; k < N; ++k)
+        for(k = j; k < N; ++k)
             wj->elements[k] = R->elements[k * M + j];
 
         wj->elements[j] += (wj->elements[0] > 0.0L ? 1.0L : -1.0L) * norm2ReturnVectorFrom(wj, j);

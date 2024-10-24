@@ -484,13 +484,15 @@ void mulMatrixHouseholder(Matrix *matrix, const Vector *vector, const Natural d)
     assert(d < matrix->M);
     #endif
 
-    for(Natural j = 0; j < matrix->N; ++j) {
+    register Natural j, h, k;
+
+    for(j = 0; j < matrix->N; ++j) {
         Real sum = 0.0L;
 
-        for(Natural h = d; h < matrix->M; ++h)
+        for(h = d; h < matrix->M; ++h)
             sum += matrix->elements[j * matrix->M + h] * vector->elements[h];
 
-        for(Natural k = d; k < matrix->M; ++k)
+        for(k = d; k < matrix->M; ++k)
             matrix->elements[j * matrix->M + k] -= 2.0L * vector->elements[k] * sum;
     }
 }
@@ -509,13 +511,15 @@ void mulHouseholderMatrix(const Vector *vector, Matrix *matrix, const Natural d)
     assert(d < matrix->M);
     #endif
 
-    for(Natural k = d; k < matrix->M; ++k) {
+    register Natural j, h, k;
+
+    for(k = d; k < matrix->M; ++k) {
         Real sum = 0.0L;
 
-        for(Natural h = d; h < matrix->N; ++h)
+        for(h = d; h < matrix->N; ++h)
             sum += vector->elements[h] * matrix->elements[h * matrix->M + k];
 
-        for(Natural j = d; j < matrix->N; ++j)
+        for(j = d; j < matrix->N; ++j)
             matrix->elements[j * matrix->M + k] -= 2.0L * vector->elements[j] * sum;
     }
 }

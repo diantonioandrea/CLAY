@@ -332,9 +332,10 @@ Real dotReturnVectorVector(const Vector *vector0, const Vector *vector1) {
  * @return Real 
  */
 Real norm2ReturnVector(const Vector *vector) {
+    register Natural j;
     Real sum = 0.0L;
 
-    for(Natural j = 0; j < vector->N; ++j)
+    for(j = 0; j < vector->N; ++j)
         sum += vector->elements[j] * vector->elements[j];
 
     return sqrt(sum);
@@ -352,9 +353,10 @@ Real norm2ReturnVectorFrom(const Vector *vector, const Natural n) {
     assert(n < vector->N);
     #endif
 
+    register Natural j;
     Real sum = 0.0L;
 
-    for(Natural j = n; j < vector->N; ++j)
+    for(j = n; j < vector->N; ++j)
         sum += vector->elements[j] * vector->elements[j];
 
     return sqrt(sum);
@@ -366,14 +368,15 @@ Real norm2ReturnVectorFrom(const Vector *vector, const Natural n) {
  * @param vector Vector.
  */
 void normaliseVector(const Vector *vector) {
+    register Natural j;
     Real sum = 0.0L;
 
-    for(Natural j = 0; j < vector->N; ++j)
+    for(j = 0; j < vector->N; ++j)
         sum += vector->elements[j] * vector->elements[j];
 
-    const Real norm = sqrt(sum);
+    const register Real norm = sqrt(sum);
 
-    for(Natural j = 0; j < vector->N; ++j)
+    for(j = 0; j < vector->N; ++j)
         vector->elements[j] /= norm;
 }
 
@@ -388,13 +391,14 @@ void normaliseVectorFrom(const Vector *vector, const Natural n) {
     assert(n < vector->N);
     #endif
 
+    register Natural j;
     Real sum = 0.0L;
 
-    for(Natural j = n; j < vector->N; ++j)
+    for(j = n; j < vector->N; ++j)
         sum += vector->elements[j] * vector->elements[j];
 
-    const Real norm = sqrt(sum);
+    const register Real norm = sqrt(sum);
 
-    for(Natural j = n; j < vector->N; ++j)
+    for(j = n; j < vector->N; ++j)
         vector->elements[j] /= norm;
 }
