@@ -80,7 +80,7 @@ Matrix *newMatrixQR_Q(const Matrix *A) {
     assert(A->N >= A->M);
     #endif
 
-    return newMatrixSquare(A->N);
+    return newMatrixUniformDiagonal(A->N, 1.0L);
 }
 
 /**
@@ -94,7 +94,7 @@ Matrix *newMatrixQR_R(const Matrix *A) {
     assert(A->N >= A->M);
     #endif
 
-    return newMatrix(A->N, A->M);
+    return newMatrixCopy(A);
 }
 
 /**
@@ -149,10 +149,8 @@ void decomposeQR(const Matrix *A, Matrix *Q, Matrix *R) {
     const Natural M = A->M;
     Real beta = 0.0L;
 
-    Matrix *P = newMatrixUniformDiagonal(M, 1.0L);
     Matrix *Pj = newMatrixSquare(N);
-
-    Vector *xj = newVector(N), *zj = newVector(N), *ej = newVector(N), *wj = newVector(N), *qj = newVector(N);
+    Vector *xj = newVector(N), *zj = newVector(N), *ej = newVector(N), *wj = newVector(N);
 
     for(Natural j = 0; j < M; ++j) {
 
@@ -162,7 +160,10 @@ void decomposeQR(const Matrix *A, Matrix *Q, Matrix *R) {
         }
         
         // Vectors.
-        *xj = *getColumn(A, j);
+        *xj = *getColumn(R, j);
+
+        for(Natural h = 0; h < j; ++h)
+            xj->elements[h] = 0.0L;
 
         beta = ((xj->elements[j] >= 0.0L) ? 1.0L : -1.0L) * norm2ReturnVector(xj);
         zj->elements[j] = beta + xj->elements[j];
@@ -174,26 +175,20 @@ void decomposeQR(const Matrix *A, Matrix *Q, Matrix *R) {
         // Householder matrix.
         *wj = *divReturnVectorScalar(zj, norm2ReturnVector(zj));
         *Pj = *newMatrixHouseholder(wj);
-        *P = *mulReturnMatrixMatrix(P, Pj);
         
         // Q matrix.
-        *qj = *mulReturnMatrixVector(P, ej);
+        *Q = *mulReturnMatrixMatrix(Q, Pj);
 
-        for(Natural k = 0; k < M; ++k)
-            Q->elements[k * M + j] = qj->elements[k];
+        // R matrix.
+        *R = *mulReturnMatrixMatrix(Pj, R);
     }
-
-    *R = *mulReturnTransposeMatrixMatrix(Q, A);
 
     freeVector(xj);
     freeVector(zj);
     freeVector(wj);
     freeVector(ej);
-    freeVector(qj);
 
     freeMatrix(Pj);
-
-    freeMatrix(P);
 }
 
 /**
