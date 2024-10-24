@@ -96,6 +96,7 @@ void decomposeQR(Matrix *Q, Matrix *R) {
 
     const Natural N = R->N;
     const Natural M = R->M;
+    const Natural S = (N - 1 < M) ? N - 1 : M;
 
     Vector *wj = getColumn(R, 0);
 
@@ -109,9 +110,9 @@ void decomposeQR(Matrix *Q, Matrix *R) {
     mulMatrixHouseholder(Q, wj, 0);
     mulHouseholderMatrix(wj, R, 0);
 
-    // Steps 1, ..., M - 1.
+    // Steps 1, ..., S.
 
-    for(Natural j = 1; j < M - 1; ++j) {
+    for(Natural j = 1; j < S; ++j) {
 
         // Householder reflector.
 
